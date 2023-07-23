@@ -1,0 +1,102 @@
+.contain{
+    border:solid 2px rgb(205, 199, 199);
+    border-radius: 20px;
+    height:65vh;
+    box-shadow:2px 2px 2px rgb(234, 221, 221) ;
+    padding: 15px;
+   
+    margin-top: 15px;
+}
+.contain1{
+    border:solid 2px rgb(205, 199, 199);
+    border-radius: 20px;
+    height:500vh;
+    box-shadow:2px 2px 2px rgb(234, 221, 221) ;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+h4{
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    color: rgb(243, 119, 125);
+}
+.main1{
+    display: flex;
+    flex-wrap: wrap;
+    width:100%;
+    justify-content: space-between;
+  
+    
+}
+#Sname,#Phone{
+    margin-top: 15px;
+   
+}
+.Title1 span{
+    color: rgb(233, 133, 153);
+}
+.main1 input{
+ width:50%;
+ margin-top: 10px;
+}
+.fileupload input[type="file"]{
+    height:150px;
+    width:150px;
+    border-radius: 50%;
+    padding:50px;
+    background-color: rgb(173, 240, 218);
+    border:solid 1px rgb(93, 78, 78);
+   
+}
+.fileupload #image{
+    margin-left: 90px;
+}
+.main1 #Name2{
+    margin-top: -60px;
+    height:40px;
+    margin-left:450px ;
+}
+.main1 #Name1{
+    height:40px;
+    width:50%;
+    margin-left: 450px;
+    margin-top: -130px;
+}
+.addaudi{
+    background-color: rgb(246, 246, 250);
+}
+.Title1.error{
+    width:700px;
+}
+.Title1{
+    display:flex;
+    justify-content: space-between;
+
+}
+
+.allaudis{
+    margin-top: 10px;
+}
+ h5{
+    font-size: 20px;
+    font-weight: bold;
+}
+.contain .btn{
+    height:45px;
+    width:90px;
+    margin-top: -71px;
+    margin-left: 800px;
+    color: azure;
+    font-weight: bold;
+    background-color: rgb(210, 8, 48);
+}
+.contain .btn1{
+    margin-left: 690px;
+   margin-top: 10px;
+    width:10%;
+    color: azure;
+    font-weight: bold;
+    background-color: rgb(6, 101, 36);
+}

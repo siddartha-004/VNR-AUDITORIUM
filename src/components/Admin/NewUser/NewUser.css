@@ -1,0 +1,107 @@
+.contain11{
+border:solid 2px rgb(205, 199, 199);
+border-radius: 20px;
+height:110vh;
+box-shadow:2px 2px 2px rgb(234, 221, 221) ;
+background-color: #292D3E;
+
+
+margin-top: 15px;
+}
+.contain11 select{
+    height:40px;
+   
+}
+.errm{
+    margin-left: 50px;
+}
+.item select{
+    margin-left: 10px;
+}
+.sign-in h4{
+    font-weight: bold;
+    color: rgb(132, 130, 244);
+    margin-bottom: 20px;
+    margin-left: 90px;
+    padding-top: 0px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.contain11 .title{
+    padding: 25px;
+    font-size: large;
+}
+.create .picture{
+    margin-left: 0px;
+  
+    
+}
+.create .sign-in{
+    background-color:#292D3E;
+    width:500px;
+    text-align: center;
+    margin-left: 36px;
+}
+.sign-in input[type="file"]{
+width:64%
+
+}
+.item1 select{
+    width:220px;
+    margin-left: -16px;
+   
+}
+.item1 label{
+    width:106px
+}
+
+.item1{
+    display: flex;
+}
+#email{
+    margin-left: 25px;
+}
+.sign-in #image{
+    margin-left: -35px;
+}
+.admins{
+    height:200vh;
+}
+.Title2 h5{
+    color: rgb(228, 49, 49);
+}
+.btn1{
+    background-color: rgb(3, 58, 39);
+    margin-left: 100px;
+}
+label{
+    margin-right: 22px;
+    font-weight: bold;
+    color: darkcyan;
+}
+.item{
+    display: flex;
+    justify-content: space-around
+}
+
+#image4{
+    margin-left: 0px;
+}
+
+.create{
+    display: flex;
+    border-radius: 10px;
+    
+    background-color:#292D3E;
+
+}
+.sign-in input{
+    width:100%
+}
+.imge{
+    height:500px;
+    width:550px;
+    background-color: #292D3E;
+}
+.content{
+    background-color: #292D3E;
+}

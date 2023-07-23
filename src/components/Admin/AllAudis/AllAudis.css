@@ -1,0 +1,111 @@
+.card{
+    position:relative;
+    width:250px;
+    height:360px;
+    border-radius: 0px 10px 10px 0px;
+    background-color: #f4f4f4;
+    box-shadow: 30px 40px 40px rgba(0,0,0,0.2);
+    perspective: 100em;
+    margin-left: 80px;
+    margin-right: 20px;
+    margin-top: 40px;
+
+}
+.icons button{
+color: blueviolet;
+margin-right: 3px;
+border-radius: 40%;
+
+border: none;
+}
+.icons button:hover{
+    background-color: azure;
+    font-size: larger;
+    font-weight: bold;
+    color: crimson;
+
+}
+.icons{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+p{
+    color: crimson;
+    font-weight: bold;
+}
+h5{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    color: darkgreen;
+    margin-bottom: 5px;
+}
+.hi{
+    margin-top: 15px;
+}
+h6{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: rgb(23, 51, 167);
+    display: inline-flex;
+   
+}
+.coverfront img{
+    border-radius: 10px;
+}
+
+.coverfront{
+    background: #b1d4ef;
+    border-radius: 0px 10px 10px 0px;
+    color:#150f0f;
+    text-align: center;
+}
+.coverfront h4{
+    color:purple;
+    font-weight: bold;
+    font-size: large;
+    font-family: sans-serif;
+}
+.coverback{
+    background: #ddd;
+    border-radius: 10px 0px 0px 10px;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+
+}
+.cover{
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    transform-style: preserve-3d;
+    transform-origin: left;
+    transition: transform 1s;
+    background: dodgerblue;
+    border-radius: 0px 10px 10px 0px;
+}
+.card:hover .cover{
+    transform: rotateY(-120deg);
+}
+.coverfront,.coverback{
+    position:absolute;
+    width:100%;
+    height:100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+.main2{
+    display: flex;
+    flex-wrap: wrap;
+    width:100%;
+    justify-content: space-between;
+  
+    
+}
+
+.main2 input{
+    margin-bottom: 8px;
+}
