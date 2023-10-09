@@ -161,7 +161,7 @@ export default function SideBar() {
                 <ListItemText primary="Events" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/AllEvents")}}>
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/AdminHome/Bookings")}}>
               <ListItemButton
                 sx={{
                   minHeight: 70,

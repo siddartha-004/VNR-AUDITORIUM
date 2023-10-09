@@ -15,9 +15,11 @@ mclient.connect('mongodb://0.0.0.0:27017')
   let dbObj=dbRef.db('cbpdemo')
 
   let AudiCollection=dbObj.collection("AddAudi")
+  let availablecollection=dbObj.collection("audiavailability")
   let userCollection=dbObj.collection("usercollection")
   app.set("userCollection",userCollection)
   app.set("AddAudi",AudiCollection)
+  app.set("audiavailability",availablecollection)
  
 
   console.log("Connected to DB successfully")

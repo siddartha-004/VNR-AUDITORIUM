@@ -1,6 +1,7 @@
 import React,{useEffect, useState}from 'react'
 import './Login.css'
 import axios from 'axios'
+import {message} from 'antd'
 import {BiSolidLockAlt} from 'react-icons/bi'
 import {FaUserAlt} from 'react-icons/fa'
 import img1 from '../../images/1.svg'
@@ -58,9 +59,11 @@ function Login() {
    useEffect(()=>{
     if(userLoginStatus==true){
       if(currentUser.typeofuser==="Admin"){
+       
         navigate("/AdminHome");
       }
       else{
+       
       navigate("/UserHome");
       }
     }

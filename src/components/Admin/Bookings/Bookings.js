@@ -2,7 +2,7 @@ import React from 'react'
 import SideBar from '../SideBar/SideBar'
 import Box from '@mui/material/Box';
 import NavBar from '../NavBar/NavBar';
-function AllEvents() {
+function Bookings() {
   return (
     <>
     <NavBar/>
@@ -11,7 +11,7 @@ function AllEvents() {
     <SideBar/>
    <Box component="main" sx={{ flexGrow: 1, p: 4 }}>
     <div className='contain1'>
-   <h3>Events</h3>
+   <h3>Bookings</h3>
    </div>
  </Box>
     </Box>
@@ -20,4 +20,4 @@ function AllEvents() {
   )
 }
 
-export default AllEvents
+export default Bookings

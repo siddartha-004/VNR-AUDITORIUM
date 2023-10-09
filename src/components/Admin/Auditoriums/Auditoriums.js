@@ -45,6 +45,7 @@ export default function Auditoriums() {
     fd.append("Audi",JSON.stringify(newAudi))
    
     fd.append("photo",selectedFile)
+    console.log(fd)
         axios.post("http://localhost:4000/AdminHome-api/register-audi",fd)
         
         .then((response)=>{

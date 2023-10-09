@@ -10,12 +10,15 @@ import AllEvents1 from './components/User/AllEvents1/AllEvents1'
 import MyBookings from './components/User/MyBookings/MyBookings'
 import List from './components/Admin/List/List'
 import BookAudi from './components/User/BookAudi/BookAudi'
+import ProtectedRoute from './components/ProtectedRoute'
+import PublicRoute from './components/PublicRoute'
 import NewUser from './components/Admin/NewUser/NewUser'
 import Home1 from './components/User/Home1/Home1'
 import Single from './components/Admin/Single/Single'
 import AllEvents from './components/Admin/AllEvents/AllEvents'
 
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
+import Bookings from './components/Admin/Bookings/Bookings'
 
 function App() {
   return (
@@ -42,6 +45,7 @@ function App() {
                 <Route index element={<Home/>}/>
                 <Route path="auditoriums" element={<Auditoriums/>}/>
                 <Route path="AllEvents" element={<AllEvents/>}/>
+                <Route path="Bookings" element={<Bookings/>}/>
                 <Route path="users">
                 <Route index element={<List/>}/>
                 <Route path=":userId" element={<Single/>}/>

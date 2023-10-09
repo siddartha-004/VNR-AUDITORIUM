@@ -1,0 +1,33 @@
+.contain3{
+    border:solid 2px rgb(205, 199, 199);
+    border-radius: 20px;
+    height:145vh;
+    box-shadow:2px 2px 2px rgb(234, 221, 221) ;
+    padding: 15px;
+    margin-top: 20px;
+    
+}
+.gifimage{
+    height:400px;
+    width:70%;
+    margin-top: -120px;
+   
+   
+}
+.gradient{
+    background: rgb(174, 162, 236);
+    background: linear-gradient(158deg,rgb(167, 156, 224) 0%,rgb(106, 123, 219) 100%);
+}
+.gradientlight1{
+    background: rgb(53,138,148);
+    background: linear-gradient(158deg,rgb(53,138,148,1) 0%,rgba(91,180,96,1) 100%);
+}
+.gradientlight2{
+    background: rgb(232, 86, 101);
+    background: linear-gradient(158deg,rgb(132,86,101,1) 0%,rgb(235, 95, 130) 100%);
+}
+.gradientlight4{
+    margin-left: 50px;
+    margin-top: 15px;
+    width:40%
+}

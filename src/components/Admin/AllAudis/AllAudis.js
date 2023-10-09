@@ -31,7 +31,8 @@ function AllAudis() {
 }
   //get
   let getAudis=()=>{
-     axios.get("http://localhost:4000/AdminHome-api/get-audi")
+    let token=localStorage.getItem("token")
+     axios.get("http://localhost:4000/AdminHome-api/get-audi",{headers:{"Authorization":"Bearer "+token}})
      .then((response)=>{
     
         console.log(response.data)

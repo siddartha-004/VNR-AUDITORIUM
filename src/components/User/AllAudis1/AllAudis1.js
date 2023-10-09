@@ -72,6 +72,7 @@ function AllAudis1() {
       {Audi1.length == 0 && (
         <p className="goby display-5 text-danger text-center">*No audis *</p>
       )}
+      
         <div className='row row-cols-3'>
       {Audi1.map((todoobj)=>{
        return ( 
