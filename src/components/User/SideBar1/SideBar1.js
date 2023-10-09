@@ -123,7 +123,7 @@ export default function SideBar1() {
                 <ListItemText primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-             <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/UserHome/MyBookings")}}>
+             <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/UserHome/vacantBookings")}}>
               <ListItemButton
                 sx={{
                   minHeight: 70,
@@ -140,7 +140,7 @@ export default function SideBar1() {
                 >
                   <CollectionsBookmarkIcon/>
                 </ListItemIcon>
-                <ListItemText primary="My Bookings" sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary="Vacancies" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
             <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/UserHome/BookAudi")}}>

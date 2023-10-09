@@ -4,6 +4,7 @@ import Login from './components/login/Login'
 import Home from './components/Admin/Home/Home'
 import Auditoriums from './components/Admin/Auditoriums/Auditoriums'
 import MainHome from './components/MainHome/MainHome'
+
 import AudiSchema from './components/User/AudiSchema/AudiSchema'
 import AllAudis1 from './components/User/AllAudis1/AllAudis1'
 import AllEvents1 from './components/User/AllEvents1/AllEvents1'
@@ -31,13 +32,15 @@ function App() {
            <Route path="login">
             <Route index element={<Login/>}/>
             </Route>
+       
            
             <Route path="UserHome">
                <Route index element={<Home1/>}/>
-               <Route path="auditoriums" element={<AudiSchema/>}/>
+               <Route path="auditoriums" element={<AllAudis1/>}/>
                <Route path="BookAudi" element={<BookAudi/>}/>
                <Route path="AllEvents" element={<AllEvents1/>}/>
-               <Route path="MyBookings" element={<MyBookings/>}/>
+               <Route path="vacantBookings" element={<MyBookings/>}/>
+          
 
             </Route>
             
@@ -45,7 +48,7 @@ function App() {
                 <Route index element={<Home/>}/>
                 <Route path="auditoriums" element={<Auditoriums/>}/>
                 <Route path="AllEvents" element={<AllEvents/>}/>
-                <Route path="Bookings" element={<Bookings/>}/>
+                <Route path="vacantBookings" element={<Bookings/>}/>
                 <Route path="users">
                 <Route index element={<List/>}/>
                 <Route path=":userId" element={<Single/>}/>

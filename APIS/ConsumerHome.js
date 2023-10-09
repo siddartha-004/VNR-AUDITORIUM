@@ -3,7 +3,13 @@ const exp = require("express");
 const userApp = exp.Router();
 
 require("dotenv").config()
-
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+const cors = require('cors');
+userApp.use(bodyParser.json({ limit: '50mb' }));
+userApp.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+userApp.use(bodyParser.json());
+userApp.use(cors());
 //import express-async-handler
 const expressAsyncHandler=require('express-async-handler')
 
@@ -12,10 +18,41 @@ const multerObj=require("./middlewares/cloudinaryConfig")
 
 const bcryptjs=require("bcryptjs")
 const jwt=require("jsonwebtoken")
-const verifyToken=require("./middlewares/verifyToken")
+const verifyToken=require("./middlewares/verifyToken");
+const { message } = require("antd");
 
 //body parser
 userApp.use(exp.json())
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'vnrvjietaudis@gmail.com',
+    pass: 'rjnh mspx eexs kosi',
+  },
+});
+userApp.post('/send-email', async (req, res) => {
+  console.log("req",req.body.recipient)
+//   const { recipient, subject, message } = req.body;
+
+const mailOptions = {
+  from: 'vnrvjietaudis@gmail.com',
+  to: req.body.recipient,
+  subject: req.body.subject,
+  text: req.body.message,
+  
+};
+
+transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    console.error(error,"dsafsfdas");
+    res.status(500).json({ error: 'Error sending email' });
+  } else {
+    console.log('Email sent: ' + info.response);
+    res.status(200).json({ message: 'Email sent successfully' });
+  }
+});
+res.send("Supree");
+});
 userApp.post('/login-user',expressAsyncHandler(async(request,response)=>{
 
   //get user collection
@@ -51,6 +88,272 @@ userApp.post('/login-user',expressAsyncHandler(async(request,response)=>{
   }
 
 }))
+
+userApp.get("/nonvacant-events",expressAsyncHandler(async(request,response)=>{
+  const collection=request.app.get("audiavailability")
+  //console.log(collection,"hello");
+  const AudiObj = request.app.get("AddAudi")
+   let Audi=await AudiObj.find().toArray();
+
+   // calculate the dates
+   //console.log(currentDate)
+   // Format the start date and end date strings
+   
+   //console.log(date,"date")
+   const roomNames = Audi
+   const notavailableRoomsNextDays = [];
+   for (let i = 0; i <= 14; i++) {
+     
+     const currentDateFormatted = new Date();
+    currentDateFormatted.setDate(currentDateFormatted.getDate() + i);
+
+    const nextDate2 =currentDateFormatted.toISOString().split('T')[0];
+    
+    
+    for (const roomName of roomNames) {
+      const c=({$and:[{date:nextDate2},{[`data.${roomName.Name1}.available`]:false}]});
+  const result1 = await collection.findOne(c);
+  
+  if(result1!==null)
+  {
+    let x=roomName.Name1;
+
+    let y=result1.data[x];
+  
+    result1.bookeddetails=y;
+    result1.bookedaudi=x;
+    
+    notavailableRoomsNextDays.push(result1);
+  
+  }
+    
+    }
+  }
+  if (notavailableRoomsNextDays.length > 0) {
+    response.status(200).send({payload:notavailableRoomsNextDays,message:"booked"})
+  } else {
+    response.status(200).send({message:"No booked events"})
+    }
+
+
+  // Print the available rooms for the next three days
+  
+
+}))
+userApp.get("/vacant-events",expressAsyncHandler(async(request,response)=>{
+  const collection=request.app.get("audiavailability")
+  //console.log(collection,"hello");
+  const AudiObj = request.app.get("AddAudi")
+   let Audi=await AudiObj.find().toArray();
+
+   // calculate the dates
+   //console.log(currentDate)
+   // Format the start date and end date strings
+   
+   //console.log(date,"date")
+   const roomNames = Audi
+   const availableRoomsNextDays = [];
+   for (let i = 0; i <= 14; i++) {
+     
+     const currentDateFormatted = new Date();
+    currentDateFormatted.setDate(currentDateFormatted.getDate() + i);
+
+    const nextDate2 =currentDateFormatted.toISOString().split('T')[0];
+
+    
+    for (const roomName of roomNames) {
+      const c=({$and:[{date:nextDate2},{[`data.${roomName.Name1}.available`]:true}]});
+  const result1 = await collection.findOne(c);
+  if(result1!==null)
+  {
+    result1.vacantdate=nextDate2;
+    result1.availableaudi=roomName.Name1;
+    result1.capacity=roomName.Capacity
+    availableRoomsNextDays.push(result1);
+  
+  }
+   //console.log(result1,"res")
+    
+    }
+  }
+  if (availableRoomsNextDays.length > 0) {
+    response.status(200).send({payload:availableRoomsNextDays,message:"available"})
+  } else {
+    response.status(200).send({message:"No available slots"})
+    }
+
+
+  // Print the available rooms for the next three days
+  
+
+}))
+userApp.get("/current-event",expressAsyncHandler(async(request,response)=>{
+ 
+  const collection=request.app.get("audiavailability")
+   const AudiObj = request.app.get("AddAudi")
+    const currentDate = new Date();
+    const currentDateFormatted = currentDate.toISOString().split('T')[0];
+  
+    let Audi=await AudiObj.find().toArray();
+    const roomNames = Audi;
+    const Todaysevents = [];
+  for (const roomName of roomNames) {
+      const c=({$and:[{date:currentDateFormatted},{[`data.${roomName.Name1}.available`]:false}]});
+  const result1 = await collection.findOne(c);
+  if(result1!=null)
+  {
+    const y=roomName.Name1;
+    const z=result1.data[y];
+  
+  
+    result1.bookeddetails=z;
+    result1.bookedaudi=y;
+  Todaysevents.push(result1);
+  }
+    }
+    if (Todaysevents.length > 0) {
+      response.status(200).send({payload:Todaysevents,message:"having"})
+    } else {
+      response.status(200).send({message:"No events Today!"})
+    }
+}))
+userApp.get("/upcoming-event",expressAsyncHandler(async(request,response)=>{
+ 
+  const collection=request.app.get("audiavailability")
+   const AudiObj = request.app.get("AddAudi")
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 1);
+    const currentDateFormatted = currentDate.toISOString().split('T')[0];
+    let Audi=await AudiObj.find().toArray();
+    const roomNames = Audi;
+    const Tomorrowsevents = [];
+  for (const roomName of roomNames) {
+      const c=({$and:[{date:currentDateFormatted},{[`data.${roomName.Name1}.available`]:false}]});
+  const result1 = await collection.findOne(c);
+  if(result1!=null)
+  {
+    const y=roomName.Name1;
+    const z=result1.data[y];
+    
+    result1.bookeddetails=z;
+    result1.bookedaudi=y;
+  Tomorrowsevents.push(result1);
+  }
+    }
+    if (Tomorrowsevents.length > 0) {
+      response.status(200).send({payload:Tomorrowsevents,message:"having"})
+    } else {
+      response.status(200).send({message:"No events Upcoming"})
+    }
+}))
+userApp.post("/book-audi",multerObj.single('photo'),expressAsyncHandler(async(request,response)=>{
+  const newSearch=JSON.parse(request.body.search);
+  //console.log(newSearch.date);
+  newSearch.image=request.file.path;
+  const collection=request.app.get("audiavailability")
+  //console.log(collection,"hello");
+  const AudiObj = request.app.get("AddAudi")
+
+   let Audi=await AudiObj.find({}, { sort: { Capacity: 1 } }).toArray();
+
+
+
+   // calculate the dates
+   const currentDate = new Date();
+   //console.log(currentDate)
+   // Format the start date and end date strings
+   const currentDateFormatted = currentDate.toISOString().split('T')[0];
+   //console.log(currentDateFormatted)
+   const deleteResult = await collection.deleteMany({ date: {$lt: currentDateFormatted } });
+   //console.log(deleteResult)
+   const numDeleted = deleteResult.deletedCount;
+   //console.log(numDeleted)
+   const maxDate = await collection.findOne({}, { sort: { date: -1 } });
+   
+   //console.log(maxDate)
+   // add corresponding date's
+   for(let i=1;i<=numDeleted;i++){
+     const nextDate = new Date(maxDate.date);
+     //console.log(nextDate)
+    nextDate.setDate(nextDate.getDate() + i);
+    const nextDateFormatted = nextDate.toISOString().split('T')[0];
+
+     const newDocuments = {};
+     Audi.forEach(roomName => {
+       newDocuments[roomName.Name1] = { available: true, who_booked: null, capacity: Number(roomName.Capacity) };
+    });
+     await collection.insertOne({ date: nextDateFormatted, data: newDocuments });
+   }
+
+
+  // now do the booking logic
+   // get the collection
+   let roomFound = false;
+   const desiredCapacity = newSearch.Capacity;
+   //console.log(newSearch)
+   const date = newSearch.date;
+   const description=newSearch
+   //console.log(date,"date")
+   const roomNames = Audi
+
+   for (const roomName of roomNames) 
+   {
+    //console.log(roomName)
+  
+     
+       const a=({$and:[{date:date},{[`data.${roomName.Name1}.capacity`]:{$gte:Number(desiredCapacity)}},{[`data.${roomName.Name1}.available`]:true}]});
+       const b=({$set:{[`data.${roomName.Name1}.available`]:false}})
+       const c=({$set:{[`data.${roomName.Name1}.who_booked`]:newSearch}})
+       const result1=await collection.updateOne(a,c);
+       console.log(result1);
+       const result = await collection.updateOne(a,b);
+     
+     
+     if (result.modifiedCount > 0) {
+       response.status(201).send({pay:1,message:`${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} is now marked as unavailable.`});
+      
+       roomFound = true;
+      break;
+    }
+  }
+   // if room is not available
+  
+
+  if (!roomFound) {
+    const availableRoomsNextThreeDays = [];
+
+    for (let i = 1; i <= 3; i++) {
+      
+      const nextDate1 = new Date(newSearch.date);
+      //console.log(currentDate,"cur")
+      nextDate1.setDate(nextDate1.getDate() + i);
+      const nextDate2 = nextDate1.toISOString().split('T')[0];
+      
+
+      for (const roomName of roomNames) {
+        const c=({$and:[{date:nextDate2},{[`data.${roomName.Name1}.capacity`]:{$gte:Number(desiredCapacity)}},{[`data.${roomName.Name1}.available`]:true}]});
+    const result1 = await collection.findOne(c);
+    if(result1!==null)
+    {
+      availableRoomsNextThreeDays.push(`${roomName.Name1} Auditorium on ${nextDate2}`);
+    break;
+    }
+     //console.log(result1,"res")
+      
+      }
+    }
+    if (availableRoomsNextThreeDays.length > 0) {
+       response.status(201).send({pay:2,message:availableRoomsNextThreeDays})
+    } else {
+      response.status(201).send({pay:3,message:`No available Auditoriums with capacity ${desiredCapacity} for the next three days.`});
+    }
+
+
+    // Print the available rooms for the next three days
+    
+  }
+}))
+
 userApp.post("/register-user",multerObj.single('photo'),expressAsyncHandler(async(request,response)=>{
 
     //get user collection

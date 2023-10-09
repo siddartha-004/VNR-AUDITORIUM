@@ -38,7 +38,7 @@ export default function Auditoriums() {
     let [error,setError]=useState("")
     let [text,setText]=useState("")
     let addNewAudi=(newAudi)=>{
-        console.log(newAudi)
+      
         
     let fd=new FormData();
  

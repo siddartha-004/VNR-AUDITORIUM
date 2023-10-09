@@ -70,28 +70,7 @@ function NewUser() {
       });
      
   };
-  let adder=()=>{
-    axios
-    .post("http://localhost:4000/AdminHome-api/get-availabilty", 1)
-    .then((response) => {
-      if(response.status===201)
-      {
-      console.log("hifi")
-      }
-      })
-  
-    .catch((err) => {
-      if (err.response) {
-        setError(err.message);
-      }
-      else if (err.request) {
-        setError(err.message);
-      }
-      else {
-        setError(err.message);
-      }
-    });
-  }
+
   return (
     <>
     <NavBar/>
@@ -221,9 +200,7 @@ function NewUser() {
     <div className='contain1' >
         <div className='Title1'>
             <h4>Registered Users in <span>Book It</span></h4>
-            <button onClick={()=>adder()}className="btn1 btn-success">
-              Register1
-            </button>
+            
         </div>
         <div className='allusers'>
           <div className='Title2'>

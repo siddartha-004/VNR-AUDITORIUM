@@ -20,79 +20,79 @@ AddAudiApp.post("/register-audi",multerObj.single('photo'),expressAsyncHandler(a
     response.status(201).send({message:"Audi created"})
   }
 }))
-AddAudiApp.post("/get-availabilty",expressAsyncHandler(async(request,response)=>{
-  console.log("first");
-  room_capacity = {
+// AddAudiApp.post("/get-availabilty",expressAsyncHandler(async(request,response)=>{
+//   console.log("first");
+//   room_capacity = {
    
-}
+// }
 
-  console.log("second");
-  const AddAudiObj=request.app.get("AddAudi")
-  let Audi=await AddAudiObj.find().toArray();
-  room_capacity=Audi;
-  console.log(room_capacity)
-  const availability=request.app.get("audiavailability")
-let room_availability = await availability.find().toArray();
-const currentDate = new Date();
-const dateList = [currentDate]; // Initialize with the current date
+//   console.log("second");
+//   const AddAudiObj=request.app.get("AddAudi")
+//   let Audi=await AddAudiObj.find().toArray();
+//   room_capacity=Audi;
+//   console.log(room_capacity)
+//   const availability=request.app.get("audiavailability")
+// let room_availability = await availability.find().toArray();
+// const currentDate = new Date();
+// const dateList = [currentDate]; // Initialize with the current date
 
-// Generate a list of future dates for the next 7 days
-for (let i = 1; i < 8; i++) {
-  const futureDate = new Date(currentDate);
-  futureDate.setDate(currentDate.getDate() + i);
-  dateList.push(futureDate.toISOString().slice(0, 10));
-}
+// // Generate a list of future dates for the next 7 days
+// for (let i = 1; i < 8; i++) {
+//   const futureDate = new Date(currentDate);
+//   futureDate.setDate(currentDate.getDate() + i);
+//   dateList.push(futureDate.toISOString().slice(0, 10));
+// }
 
-for (const dateItem of dateList) {
-  if (!(dateItem in room_availability)) {
-    // If the date is not in the dictionary, initialize it with room availability
-    room_availability[dateItem] = { A: true, B: true, C: true };
-  }
+// for (const dateItem of dateList) {
+//   if (!(dateItem in room_availability)) {
+//     // If the date is not in the dictionary, initialize it with room availability
+//     room_availability[dateItem] = { A: true, B: true, C: true };
+//   }
 
-  const availableRooms = [];
-  for (const room in roomCapacity) {
-    if (room_availability[dateItem][room] && numStudents <= roomCapacity[room]) {
-      availableRooms.push(room);
-    }
-  }
+//   const availableRooms = [];
+//   for (const room in roomCapacity) {
+//     if (room_availability[dateItem][room] && numStudents <= roomCapacity[room]) {
+//       availableRooms.push(room);
+//     }
+//   }
 
-  if (availableRooms.length > 0) {
-    // If there are available rooms, book the one with the least capacity
-    const minCapacityRoom = availableRooms.reduce((minRoom, room) =>
-      roomCapacity[room] < roomCapacity[minRoom] ? room : minRoom
-    );
-    room_availability[dateItem][minCapacityRoom] = false;
+//   if (availableRooms.length > 0) {
+//     // If there are available rooms, book the one with the least capacity
+//     const minCapacityRoom = availableRooms.reduce((minRoom, room) =>
+//       roomCapacity[room] < roomCapacity[minRoom] ? room : minRoom
+//     );
+//     room_availability[dateItem][minCapacityRoom] = false;
   
-  }
-}
+//   }
+// }
 
-// If no room is available, suggest the next available date for each room
-const nextAvailableDates = {};
-for (const room in roomCapacity) {
-  nextAvailableDates[room] = null;
-  for (const dateItem of dateList) {
-    if (roomAvailability[dateItem][room]) {
-      nextAvailableDates[room] = dateItem;
-      break;
-    }
-  }
-}
+// // If no room is available, suggest the next available date for each room
+// const nextAvailableDates = {};
+// for (const room in roomCapacity) {
+//   nextAvailableDates[room] = null;
+//   for (const dateItem of dateList) {
+//     if (roomAvailability[dateItem][room]) {
+//       nextAvailableDates[room] = dateItem;
+//       break;
+//     }
+//   }
+// }
 
-const unavailableRooms = Object.keys(nextAvailableDates).filter(room => !nextAvailableDates[room]);
-if (unavailableRooms.length === Object.keys(roomCapacity).length) {
-//   return No available room for ${numStudents} students. Next available dates for rooms: ${JSON.stringify(nextAvailableDates)};
- } else {
-  const availableRoomList = Object.keys(roomCapacity).filter(room => nextAvailableDates[room]);
-  // return No available room for ${numStudents} students. Next available dates for rooms: ${JSON.stringify(nextAvailableDates)}. Rooms available on ${availableRoomList.join(', ')} on different dates.;
-}
-
-
-
-console.log("third")
+// const unavailableRooms = Object.keys(nextAvailableDates).filter(room => !nextAvailableDates[room]);
+// if (unavailableRooms.length === Object.keys(roomCapacity).length) {
+// //   return No available room for ${numStudents} students. Next available dates for rooms: ${JSON.stringify(nextAvailableDates)};
+//  } else {
+//   const availableRoomList = Object.keys(roomCapacity).filter(room => nextAvailableDates[room]);
+//   // return No available room for ${numStudents} students. Next available dates for rooms: ${JSON.stringify(nextAvailableDates)}. Rooms available on ${availableRoomList.join(', ')} on different dates.;
+// }
 
 
 
-}))
+// console.log("third")
+
+
+
+// }))
 AddAudiApp.get("/get-Audi",verifyToken,expressAsyncHandler(async(request,response)=>{
     const AddAudiObj=request.app.get("AddAudi")
     let Audi=await AddAudiObj.find().toArray();

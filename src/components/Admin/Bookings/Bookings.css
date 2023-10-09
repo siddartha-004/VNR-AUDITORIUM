@@ -1,0 +1,44 @@
+/* styles.css */
+
+/* Style the table container */
+.table-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+  }
+  
+  /* Style the table headers */
+  th {
+    background-color: #f2f2f2;
+    font-weight: bolder;
+    text-align: left;
+    padding: 10px;
+    color: rgb(11, 61, 24);
+  }
+  
+  /* Style the table rows */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style table data cells */
+  td {
+    padding: 10px;
+  }
+  
+  /* Style the table itself */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 10px;
+  }
+  
+  /* Style table hover effect */
+  tr:hover {
+    background-color: #e0e0e0;
+  }
+  

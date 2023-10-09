@@ -1,14 +1,16 @@
 import React,{useState,useEffect,useContext} from 'react'
 import StadiumIcon from '@mui/icons-material/Stadium';
 import Swal from 'sweetalert2'
-
+import SideBar1 from '../SideBar1/SideBar1';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import NavBar1 from '../NavBar1/NavBar1';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Groups3Icon from '@mui/icons-material/Groups3';
 
 import {useForm} from 'react-hook-form'
 import './AllAudis1.css'
-import axios from 'axios'
 function AllAudis1() {
 
   let {register,handleSubmit,reset,formState:{errors},setValue,getValues}=useForm();
@@ -34,7 +36,7 @@ function AllAudis1() {
         }
         else{
           setAudi1(response.data.payload)
-          
+      
           console.log("done");
         }
           
@@ -68,6 +70,14 @@ function AllAudis1() {
     
     
   return (
+    <>
+    <NavBar1/>
+    <Box height={45}/>
+    <Box sx={{ display: 'flex' }}>
+    <SideBar1/>
+   <Box component="main" sx={{ flexGrow: 1, p: 4 }}>
+    <div className='contain3'>
+   <h4>Auditoriums in VNRVJIET</h4>
     <div>
       {Audi1.length == 0 && (
         <p className="goby display-5 text-danger text-center">*No audis *</p>
@@ -102,6 +112,10 @@ function AllAudis1() {
       </div>
       
     </div>
+    </div>
+    </Box>
+    </Box>
+    </>
   )
 }
 

@@ -37,7 +37,6 @@ function AllAudis() {
     
         console.log(response.data)
           setAudi(response.data.payload)
-          
           console.log("done");
           
       

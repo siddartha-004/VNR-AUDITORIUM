@@ -161,7 +161,7 @@ export default function SideBar() {
                 <ListItemText primary="Events" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/AdminHome/Bookings")}}>
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/AdminHome/vacantBookings")}}>
               <ListItemButton
                 sx={{
                   minHeight: 70,
@@ -178,7 +178,7 @@ export default function SideBar() {
                 >
                   <EventAvailableIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Bookings" sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary="Vacancies" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
             <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/AdminHome/auditoriums")}}>
