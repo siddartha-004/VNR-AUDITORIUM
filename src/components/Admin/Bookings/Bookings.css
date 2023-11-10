@@ -9,7 +9,14 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     background-color: #fff;
   }
-  
+  .contain4{
+    border:solid 2px rgb(205, 199, 199);
+    border-radius: 20px;
+    height:100%;
+    box-shadow:2px 2px 2px rgb(234, 221, 221) ;
+    padding: 15px;
+    margin-top: 20px;
+}
   /* Style the table headers */
   th {
     background-color: #f2f2f2;

@@ -4,6 +4,7 @@ import Groups2Icon from '@mui/icons-material/Groups2';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import AttachEmailIcon from '@mui/icons-material/AttachEmail';
+import success from '../../../../images/success.mp3'
 // import StadiumIcon from '@mui/icons-material/Stadium';
  import Swal from 'sweetalert2';
  import Modal from 'react-bootstrap/Modal';
@@ -24,7 +25,8 @@ function Admin() {
 
   const [show, setShow] = useState(false);
   let {register,handleSubmit,reset,formState:{errors},setValue,getValues}=useForm();
-
+  const audioElement = new Audio(success);
+  audioElement.style.display = 'none'; // Hide the audio element
   let [user,setuser]=useState([])
   let [error,setError]=useState("")
   const handleClose = () => setShow(false);
@@ -55,6 +57,7 @@ function Admin() {
       if(res.status===201)
       {
         console.log("done1");
+        audioElement.play(); 
         Swal.fire({
           icon: 'success',
           title: 'User Saved Successfully!',
@@ -116,7 +119,7 @@ function Admin() {
              </div>
             <div className='card-content'>
             <div className='icons1'><button><EditIcon  className='icon1' onClick={()=>{EditAdmin(userobj)}}/></button></div>
-                 <h5 className='mb-2'><span><Groups2Icon/></span>   Club name: <h6> {userobj.clubname}</h6></h5>
+                 <h5 className='mb-2'><span><Groups2Icon/></span>   Admin name: <h6> {userobj.clubname}</h6></h5>
                  <h5 className='mb-2'><span><ContactPageIcon/></span>  User name: <h6> {userobj.username}</h6></h5>
                 <h5 className='mb-2'><span> <PhoneInTalkIcon/></span>   PhoneNumber: <h6> {userobj.phonenumber}</h6></h5>
                  <h5 className='mb-2'><span><AttachEmailIcon/></span>   Email Id: <h6> {userobj.email}</h6></h5>

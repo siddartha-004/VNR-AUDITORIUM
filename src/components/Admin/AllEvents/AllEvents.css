@@ -64,6 +64,9 @@
 .fer{
     display:flex;
 }  
+.fer1{
+  display:flex;
+}  
 
 .down button{
     color: blueviolet;

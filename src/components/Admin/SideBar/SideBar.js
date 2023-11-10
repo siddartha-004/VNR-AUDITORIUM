@@ -5,6 +5,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
+import LowPriorityIcon from '@mui/icons-material/LowPriority';
 import IconButton from '@mui/material/IconButton';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
@@ -201,7 +202,26 @@ export default function SideBar() {
                 <ListItemText primary="Auditoriums" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/AdminHome/bookpriorly")}}>
+              <ListItemButton
+                sx={{
+                  minHeight: 70,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <LowPriorityIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Priority Book" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
         
         </List>
       </Drawer>

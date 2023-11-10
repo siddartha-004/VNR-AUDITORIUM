@@ -15,7 +15,7 @@ import { Calendar, theme } from 'antd';
 
 
 
-function Home() {
+function Home1() {
   const onPanelChange = (value, mode) => {
     console.log(value.format('YYYY-MM-DD'), mode);
   };
@@ -36,7 +36,7 @@ function Home() {
        if(response.data.message==="having")
        {
        
-        
+       
          setevent1(response.data.payload)
        
        }
@@ -68,8 +68,8 @@ function Home() {
      if(response.data.message==="having")
      {
      
+    
       console.log(response.data.payload)
-
        setevent2(response.data.payload)
      
      }
@@ -120,12 +120,9 @@ useEffect(()=>{
       
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          Events
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-         Events
-         
-        </Typography>
+       
       </CardContent>
       
     </Card>
@@ -135,11 +132,9 @@ useEffect(()=>{
       
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          Vacancies
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Bookings
-        </Typography>
+       
       </CardContent>
       
     </Card>
@@ -147,13 +142,13 @@ useEffect(()=>{
       
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          Auditoriums
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        {/* <Typography variant="body2" color="text.secondary">
           <div className='heading'>
           Add User
           </div>
-        </Typography>
+        </Typography> */}
       </CardContent>
       
     </Card>
@@ -177,97 +172,298 @@ useEffect(()=>{
             </Stack>
           </Grid>
         </Grid>
-        <Box height={20}/>
+        <Box height={40}/>
         <Grid container spacing={1}>
           <Grid item xs={8}>
-          <Card sx={{ height:80+"vh"}}>
+          <Card sx={{ height:100+"%"}}>
       
       <CardContent>
-       <h4>Events Ongoing Today!</h4>
+       <h4>Events Ongoing Today Morning!</h4>
        <div className='fer'>
        
        {event1.length == 0 && (
-        <p className="goby display-5 text-danger text-center">*No Events Today! *</p>
+        <p className="goby display-5 text-danger text-center">*No Events Today ! *</p>
       )}
-      <div className='fer'>
-   {event1.map(event1 => (
-        <Card className="event-card">
-      <CardMedia
-        component="img"
-        height="200"
-        image={event1.bookeddetails.who_booked.image}
-        alt={event1.bookeddetails.who_booked.eventname}
-      />
-      <CardContent>
-        <Typography variant="h6" component="div" color="text.primary">
-          {event1.bookeddetails.who_booked.eventname}
+      
+      <div className='row row-cols-2'>
+      {event1.map(event1 => (
+  <div >
+     
+   {event1.bookeddetails.who_bookedM&&    <Card className="event-card">
+    <CardMedia
+      component="img"
+      height="200"
+      image={event1.bookeddetails.who_bookedM?.image}
+      alt={event1.bookeddetails.who_bookedM?.eventname}
+    />
+    <CardContent>
+      <Typography variant="h6" component="div" color="text.primary">
+        {event1.bookeddetails.who_bookedM?.eventname}
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        Date: {event1.bookeddetails.who_bookedM?.date}
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        Time: Morning
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+          Booked By: {event1.bookeddetails.who_bookedM?.coordinatorname}
         </Typography>
+        {event1.bookeddetails.who_bookedM.clubname&&
         <Typography variant="body2" color="text.secondary">
-          Date: {event1.bookeddetails.who_booked.date}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Booked By: {event1.bookeddetails.who_booked.clubname}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Phone no: {event1.bookeddetails.who_booked.phonenumber}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Location:{event1.bookedaudi}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {event1.bookeddetails.who_booked.description}
-        </Typography>
-       
-          
-      </CardContent>
-    </Card>
+          Club name: {event1.bookeddetails.who_bookedM?.clubname}
+        </Typography>}
+      <Typography variant="body2" color="text.secondary">
+        Phone no: {event1.bookeddetails.who_bookedM?.phonenumber}
+      </Typography>
+     {event1.bookeddetails.who_bookedM&& <Typography variant="body2" color="text.secondary">
+        Location:{event1.bookedaudi}
+      </Typography>}
+      <Typography variant="body2" color="text.secondary">
+        {event1.bookeddetails.who_bookedM?.description}
+      </Typography>
+     
+        
+    </CardContent>
+  </Card>}
+  
+ 
+    
+
+      
+    
+    
+ 
+
+  </div>
+ 
+ 
+    
+
+      
     
       ))}
+   
       </div>
+     
      </div>
       </CardContent>
       
     </Card>
           </Grid>
           <Grid item xs={4}>
-          <Card sx={{ height:80+"vh"}}>
+          <Card sx={{ height:100+"%"}}>
       
       <CardContent>
-        <h5>Events Upcoming!</h5>
+        <h5>Morning Events Upcoming!</h5>
         <div className='ferr'>
        
        {event2.length == 0 && (
-        <p className="goby display-5 text-danger text-center">*No Events Today! *</p>
+        <p className="goby display-5 text-danger text-center">*No Events Tomorrow! *</p>
       )}
       <div className='ferr'>
-   {event2.map(event2 => (
-        <Card className="event-card1">
+      {event2.map(event2 => (
+  <div >
+     
+   {event2.bookeddetails.who_bookedM&&     <Card className="event-card1">
       
       <CardContent>
         <Typography variant="h6" component="div" color="text.primary">
-          {event2.bookeddetails.who_booked.eventname}
+          {event2.bookeddetails.who_bookedM?.eventname}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Date: {event2.bookeddetails.who_booked.date}
+          Date: {event2.bookeddetails.who_bookedM?.date}
         </Typography>
+       
         <Typography variant="body2" color="text.secondary">
-          Booked By: {event2.bookeddetails.who_booked.clubname}
+          Booked By: {event2.bookeddetails.who_bookedM?.coordinatorname}
         </Typography>
+        {event2.bookeddetails.who_bookedM.clubname&&
         <Typography variant="body2" color="text.secondary">
-          Phone no: {event2.bookeddetails.who_booked.phonenumber}
+          Club name: {event2.bookeddetails.who_bookedM?.clubname}
+        </Typography>}
+        <Typography variant="body2" color="text.secondary">
+          Phone no: {event2.bookeddetails.who_bookedM?.phonenumber}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Location:{event2.bookedaudi}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {event2.bookeddetails.who_booked.description}
+          {event2.bookeddetails.who_bookedM?.description}
         </Typography>
        
           
       </CardContent>
-    </Card>
+    </Card>}
+  
+ 
+    
+
+      
+    
+    
+ 
+
+  </div>
+ 
+ 
+    
+
+      
     
       ))}
+    
+      
+      </div>
+     </div>
+      </CardContent>
+      
+    </Card>
+          </Grid>
+        </Grid>
+        <Box height={40}/>
+        <Grid container spacing={1}>
+          <Grid item xs={8}>
+          <Card sx={{ height:100+"%"}}>
+      
+      <CardContent>
+       <h4>Events Ongoing Today Afternoon!</h4>
+       <div className='fer'>
+       
+       {event1.length == 0 && (
+        <p className="goby display-5 text-danger text-center">*No Events Today ! *</p>
+      )}
+      
+      <div className='row row-cols-2'>
+      {event1.map(event1 => (
+  <div >
+     
+   {event1.bookeddetails.who_bookedA&&    <Card className="event-card">
+    <CardMedia
+      component="img"
+      height="200"
+      image={event1.bookeddetails.who_bookedA?.image}
+      alt={event1.bookeddetails.who_bookedA?.eventname}
+    />
+    <CardContent>
+      <Typography variant="h6" component="div" color="text.primary">
+        {event1.bookeddetails.who_bookedA?.eventname}
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        Date: {event1.bookeddetails.who_bookedA?.date}
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        Time: Afternoon
+      </Typography>
+     
+      <Typography variant="body2" color="text.secondary">
+          Booked By: {event1.bookeddetails.who_bookedA?.coordinatorname}
+        </Typography>
+        {event1.bookeddetails.who_bookedA.clubname&&
+        <Typography variant="body2" color="text.secondary">
+          Club name: {event1.bookeddetails.who_bookedA?.clubname}
+        </Typography>}
+      <Typography variant="body2" color="text.secondary">
+        Phone no: {event1.bookeddetails.who_bookedA?.phonenumber}
+      </Typography>
+     {event1.bookeddetails.who_bookedA&& <Typography variant="body2" color="text.secondary">
+        Location:{event1.bookedaudi}
+      </Typography>}
+      <Typography variant="body2" color="text.secondary">
+        {event1.bookeddetails.who_bookedA?.description}
+      </Typography>
+     
+        
+    </CardContent>
+  </Card>}
+  
+ 
+    
+
+      
+    
+    
+ 
+
+  </div>
+ 
+ 
+    
+
+      
+    
+      ))}
+   
+      </div>
+     
+     </div>
+      </CardContent>
+      
+    </Card>
+          </Grid>
+          <Grid item xs={4}>
+          <Card sx={{ height:100+"%"}}>
+      
+      <CardContent>
+        <h5>Afternoon Events Upcoming!</h5>
+        <div className='ferr'>
+       
+       {event2.length == 0 && (
+        <p className="goby display-5 text-danger text-center">*No Events Tomorrow! *</p>
+      )}
+      <div className='ferr'>
+      {event2.map(event2 => (
+  <div >
+     
+   {event2.bookeddetails.who_bookedA&&     <Card className="event-card1">
+      
+      <CardContent>
+        <Typography variant="h6" component="div" color="text.primary">
+          {event2.bookeddetails.who_bookedA?.eventname}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Date: {event2.bookeddetails.who_bookedA?.date}
+        </Typography>
+        
+        <Typography variant="body2" color="text.secondary">
+          Booked By: {event2.bookeddetails.who_bookedA?.coordinatorname}
+        </Typography>
+        {event2.bookeddetails.who_bookedA.clubname&&
+        <Typography variant="body2" color="text.secondary">
+          Club name: {event2.bookeddetails.who_bookedA?.clubname}
+        </Typography>}
+        <Typography variant="body2" color="text.secondary">
+          Phone no: {event2.bookeddetails.who_bookedA?.phonenumber}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Location:{event2.bookedaudi}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {event2.bookeddetails.who_bookedA?.description}
+        </Typography>
+       
+          
+      </CardContent>
+    </Card>}
+  
+ 
+    
+
+      
+    
+    
+ 
+
+  </div>
+ 
+ 
+    
+
+      
+    
+      ))}
+    
+      
       </div>
      </div>
       </CardContent>
@@ -283,4 +479,4 @@ useEffect(()=>{
   )
 }
 
-export default Home
+export default Home1

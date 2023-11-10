@@ -3,10 +3,13 @@ import React,{useState,useEffect,useContext} from 'react'
 import AllAudis from '../AllAudis/AllAudis';
 import {useForm} from 'react-hook-form'
 import axios from 'axios'
+import Spinner1 from '../../Spinner1/Spinner1';
 import Swal from 'sweetalert2';
+import success from '../../../images/success.mp3'
 import {Alert} from '@mui/material'
 import {toast,ToastContainer} from 'react-toastify'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Spinner from '../../Spinner/Spinner';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import 'react-toastify/dist/ReactToastify.css'
 import './Auditoriums.css';
@@ -19,6 +22,7 @@ import {Button,Dialog,DialogActions,DialogContentText,DialogTitle, Stack} from "
 
 export default function Auditoriums() {
     const [open,openchange]=useState(false);
+    const [loading, setLoading] = useState(false);
 
     let [selectedFile,setSelectedFile]=useState(null)
     const functionopenpopup=()=>{
@@ -27,10 +31,13 @@ export default function Auditoriums() {
     const closepopup=()=>{
         openchange(false);
     }
+ 
     const navigate = useNavigate();
     const onFileSelect=(e)=>{
         setSelectedFile(e.target.files[0])
     }
+    const audioElement = new Audio(success);
+    audioElement.style.display = 'none'; // Hide the audio element
 
           
    
@@ -38,7 +45,7 @@ export default function Auditoriums() {
     let [error,setError]=useState("")
     let [text,setText]=useState("")
     let addNewAudi=(newAudi)=>{
-      
+      setLoading(true); 
         
     let fd=new FormData();
  
@@ -54,6 +61,7 @@ export default function Auditoriums() {
           if(response.status===201)
           {
             console.log("added")
+            audioElement.play(); 
             Swal.fire({
               icon: 'success',
               title: 'Audi Created Successfully!',
@@ -94,6 +102,9 @@ export default function Auditoriums() {
             text:err.message,
           });
         })
+        .finally(() => {
+          setLoading(false); // Hide the spinner after the request is complete
+        });
       }
   return (
     <>
@@ -101,6 +112,8 @@ export default function Auditoriums() {
     <Box height={40}/>
     <Box sx={{ display: 'flex' }}>
     <SideBar/>
+    {loading && <Spinner1 />}
+  
     <div className='addaudi'>
    <Box component="main" sx={{ flexGrow: 1, p: 4 }}>
    <div className='contain' >
@@ -145,13 +158,13 @@ export default function Auditoriums() {
            
         </div>
         <div className='allaudis'>
-             
-             <AllAudis/>
-            </div>
+       <AllAudis />
+                        </div>
         
     </div>
  </Box>
  </div>
+
     </Box>
     </>
    

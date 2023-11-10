@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
-import NavBar1 from '../NavBar1/NavBar1';
+import NavBar from '../NavBar/NavBar';
 import { PlusOutlined } from '@ant-design/icons';
-import './BookAudi.css';
+import './PriorityBook.css'
 import success from '../../../images/success.mp3'
 import {useNavigate} from 'react-router-dom'
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
@@ -13,21 +13,20 @@ import pdfFile from '../../finalMe.pdf'
 import Swal from 'sweetalert2'
 import {Form,Input,InputNumber,DatePicker, TimePicker,Upload} from 'antd'
 import moment from 'moment'
-import Spinner1 from '../../Spinner1/Spinner1';
 import img2 from '../../../images/6.svg'
 import {useForm} from 'react-hook-form'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import SideBar1 from '../SideBar1/SideBar1';
+import SideBar from '../SideBar/SideBar';
 import FormItem from 'antd/es/form/FormItem';
-function BookAudi() {
+import Spinner1 from '../../Spinner1/Spinner1';
+function PrioirityBook() {
   let navigate=useNavigate()
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const audioElement = new Audio(success);
   audioElement.style.display = 'none'; // Hide the audio element
-
   let {
     register,
     handleSubmit,reset,
@@ -35,10 +34,9 @@ function BookAudi() {
   } = useForm();
   let [error, setError] = useState("");
   let [selectedFile,setSelectedFile]=useState(null)
+  const [loading, setLoading] = useState(false);
   const [pdfBytes, setPdfBytes] = useState(null);
   const [newData,setnewDate] = useState(null)
-  
-  const [loading, setLoading] = useState(false);
   const [audiname,setaudiname]=useState("")
   useEffect(()=>{
     console.log(newData,"asdfasfas")
@@ -65,7 +63,9 @@ function BookAudi() {
       .catch(error => {
         console.error(error);
       
-      });
+      })
+      
+     
 
     }
     const loadPdfFromFile = async (newData) => {
@@ -177,11 +177,12 @@ function BookAudi() {
     fd.append("photo",selectedFile)
     
     axios
-    .post("http://localhost:4000/ConsumerHome-api/book-audi", fd)
+    .post("http://localhost:4000/ConsumerHome-api/book-priority", fd)
     .then((response) => {
       if (response.status === 201) {
         if(response.data.pay===1)
         {
+          console.log(response.data)
           setnewDate(newSearch)
           setaudiname(response.data.message)
           audioElement.play(); 
@@ -198,50 +199,6 @@ function BookAudi() {
           
         
           
-        }else if(response.data.pay===2){
-         const dataArray = response.data.message // Replace with your actual data
-         
-          
-          
-          if (dataArray.length > 0) {
-            let rowData = '';
-          
-            // Create rows with data
-            dataArray.forEach((item) => {
-              rowData += `<tr><td>${item}</td></tr>`;
-            });
-          
-            // Create a table structure
-            const tableHtml = `
-            <h4>Available Auditoriums for next three days</h4>
-              <table>
-                <tbody>
-                  ${rowData}
-                </tbody>
-              </table>
-            `;
-            Swal.fire({
-              icon: 'warning',
-              text:'Available Audis for next 3 days:',
-              title: 'Cannot Book due to Unavailibility',
-              html: tableHtml,
-              customClass: {
-                htmlContainer: 'custom-swal-container', // Apply CSS for custom styling
-                container: 'swal-alert', 
-                backdrop: 'custom-swal-backdrop',
-              },
-            });
-          
-        
-        
-          
-        }else{
-          Swal.fire({
-            icon: 'warning',
-            title: 'Cannot Book due to Unavailability',
-            text:response.data.message,
-          });
-        
         }
         }
         if(response.status!=201){
@@ -252,7 +209,7 @@ function BookAudi() {
             title: 'Cannnot Book.Try Again!',
             text:response.data.message,
           });
-        }
+          
         }
       })
       .catch((err) => {
@@ -270,21 +227,20 @@ function BookAudi() {
         setLoading(false); // Hide the spinner after the request is complete
       });
      
-     
   };
   return (
     <>
-         <NavBar1/>
+         <NavBar/>
          <Box height={40}/>
          <Box sx={{ display: 'flex' }}>
-         <SideBar1/>
+         <SideBar/>
          {loading && <Spinner1 />}
         <Box component="main" sx={{ flexGrow: 1, p: 4 }}>
         <div className='contain12' >
        
         
        <div className='title1'>
-           <h4>Create an Event</h4>
+           <h4>Create an Emergency Event</h4>
        </div>
        <div className='create1'>
          <div className='sign-event' >
@@ -298,17 +254,17 @@ function BookAudi() {
                type="text"
                id="coordinatorname"
                className="form-control"
-              
+               
                {...register("coordinatorname", { required: true })}
              />
              </div>
            <div className="item2 mb-4">
-             <label htmlFor="name">clubname:</label>
+             <label htmlFor="name"> clubname:</label>
              <input
                type="text"
                id="clubname"
                className="form-control"
-              
+               
                {...register("clubname")}
              />
              </div>
@@ -318,7 +274,6 @@ function BookAudi() {
                type="text"
                id="clubname"
                className="form-control"
-               
                {...register("eventname", { required: true })}
              />
            
@@ -336,6 +291,21 @@ function BookAudi() {
              
              
            </div>
+           <div className="item3 mb-4">
+              <label htmlFor="name">* Timing:</label>
+              
+              <select
+                type="text"
+                id="timing"
+                className="form-select"
+                placeholder="e.g. John"
+                {...register("timing", { required: true })}>
+                <option value="FN">FN</option>
+                <option value="AN">AN</option>
+                </select>
+              
+            </div>
+           
            
            <div className="item2 mb-4">
              <label htmlFor="name">* Email:</label>
@@ -437,4 +407,4 @@ function BookAudi() {
   )
 }
 
-export default BookAudi
+export default PrioirityBook

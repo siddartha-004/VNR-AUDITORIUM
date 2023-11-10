@@ -17,6 +17,12 @@ AddAudiApp.post("/register-audi",multerObj.single('photo'),expressAsyncHandler(a
   else{
     newAudi.image=request.file.path;
     await AddAudiObj.insertOne(newAudi)
+    const audiavailability=request.app.get("audiavailability")
+    
+    
+
+audiavailability.updateMany({},{ $set: { [`data.${newAudi.Name1}`]: { availableM: true, who_bookedM: null,availableA: true, who_bookedA: null, capacity: Number(newAudi.Capacity) } } });
+
     response.status(201).send({message:"Audi created"})
   }
 }))
@@ -111,7 +117,12 @@ AddAudiApp.put("/edit-audi/:id",expressAsyncHandler(async(request,response)=>{
 AddAudiApp.delete("/remove/:name",expressAsyncHandler(async(request,response)=>{
   const AddAudiObj1=request.app.get("AddAudi")
  const name=request.params.name;
- let dbRes=await AddAudiObj1.deleteOne({Name1:name}).then(dbRes=>{
+ const audiavailability=request.app.get("audiavailability")
+ audiavailability.updateMany({},{ $unset: { [`data.${name}`]: { availableM: true, who_bookedM: null,availableA: true, who_bookedA: null } } });
+ let dbRes=await AddAudiObj1.deleteOne({Name1:name}).then(
+  dbRes=>{
+   
+    
    response.status(201).send({message:"Audi removed"})
  })
 }))

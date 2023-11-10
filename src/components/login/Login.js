@@ -104,14 +104,14 @@ function Login() {
        <div class="panels-container1">
          <div class="panel1 left-panel1">
            <div class="content1">
-             <h3>New here ?</h3>
+             {/* <h3>New here ?</h3>
              <p>
                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
             ex ratione. Aliquid!
             </p>
              <button class="btn1 transparent" id="sign-up-btn">
               Sign up
-             </button>
+             </button> */}
           </div>
           <img src={img1} class="image" alt="" />
         </div>

@@ -4,7 +4,7 @@ import Login from './components/login/Login'
 import Home from './components/Admin/Home/Home'
 import Auditoriums from './components/Admin/Auditoriums/Auditoriums'
 import MainHome from './components/MainHome/MainHome'
-
+import PrioirityBook from './components/Admin/PriorityBook/PriorityBook'
 import AudiSchema from './components/User/AudiSchema/AudiSchema'
 import AllAudis1 from './components/User/AllAudis1/AllAudis1'
 import AllEvents1 from './components/User/AllEvents1/AllEvents1'
@@ -47,6 +47,7 @@ function App() {
             <Route path="AdminHome">
                 <Route index element={<Home/>}/>
                 <Route path="auditoriums" element={<Auditoriums/>}/>
+                <Route path="bookpriorly" element={<PrioirityBook/>}/>
                 <Route path="AllEvents" element={<AllEvents/>}/>
                 <Route path="vacantBookings" element={<Bookings/>}/>
                 <Route path="users">

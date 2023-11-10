@@ -3,12 +3,15 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import Admin from '../Users/Admins/Admins';
 import { useState } from "react";
+import Spinner from '../../Spinner/Spinner';
 import Users1 from '../Users/Users1/Users';
 import {useForm} from 'react-hook-form'
+import Spinner1 from '../../Spinner1/Spinner1';
 import SideBar from '../SideBar/SideBar'
 import { Alert } from '@mui/material';
 import Box from '@mui/material/Box';
 import './NewUser.css';
+import success from '../../../images/success.mp3'
 import NavBar from '../NavBar/NavBar'
 import img2 from '../../../images/2.svg'
 
@@ -20,12 +23,16 @@ function NewUser() {
     handleSubmit,reset,
     formState: { errors },
   } = useForm();
+  const audioElement = new Audio(success);
+  audioElement.style.display = 'none'; // Hide the audio element
   let [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   let [selectedFile,setSelectedFile]=useState(null)
   const onFileSelect=(e)=>{
     setSelectedFile(e.target.files[0])
    }
    let addNewUser = (newUser) => {
+    setLoading(true)
     let fd=new FormData();
     
 
@@ -38,7 +45,7 @@ function NewUser() {
       .post("http://localhost:4000/ConsumerHome-api/register-user", fd)
       .then((response) => {
         if (response.status === 201) {
-        
+          audioElement.play(); 
           console.log("added")
           Swal.fire({
             icon: 'success',
@@ -67,6 +74,9 @@ function NewUser() {
         else {
           setError(err.message);
         }
+      })
+      .finally(() => {
+        setLoading(false); // Hide the spinner after the request is complete
       });
      
   };
@@ -77,17 +87,18 @@ function NewUser() {
     <Box height={40}/>
     <Box sx={{ display: 'flex' }}>
     <SideBar/>
+    {loading && <Spinner1 />}
    <Box component="main" sx={{ flexGrow: 1, p: 4 }}>
   
    <div className='contain11' >
        
         
         <div className='title'>
-            <h4>Create a new User</h4>
+            <h4>Sign - In Form</h4>
         </div>
         <div className='create'>
           <div className='sign-in'>
-            <h4>Sign in</h4>
+            <h4>Create a new User</h4>
            
             <form onSubmit={handleSubmit(addNewUser)}>
             {/* username */}
@@ -97,7 +108,7 @@ function NewUser() {
                 type="text"
                 id="clubname"
                 className="form-control"
-                placeholder="e.g. Computer Society of India" 
+                
                 {...register("clubname", { required: true })}
               />
             
@@ -108,7 +119,7 @@ function NewUser() {
                 type="text"
                 id="username"
                 className="form-control"
-                placeholder="e.g. CSI@123" 
+                placeholder="e.g. VNR@123" 
                 {...register("username", { required: true })}
               />
             </div>
@@ -206,13 +217,13 @@ function NewUser() {
           <div className='Title2'>
              <h5>Admins</h5>
              <div className='admins'>
-             <Admin/>
+             {loading ? <Spinner /> : <Admin />}
              </div>
           </div>
           <div className='Title2'>
             <hr/>
              <h5>Users</h5>
-             <Users1/>
+             {loading ? <Spinner /> : <Users1 />}
           </div>
              
              

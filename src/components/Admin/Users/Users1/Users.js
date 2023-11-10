@@ -3,6 +3,7 @@
 import React,{useState,useEffect,useContext} from 'react'
 import img5 from '../../../../images/5.jpg';
 import Swal from 'sweetalert2'
+import success from '../../../../images/success.mp3'
 import Groups2Icon from '@mui/icons-material/Groups2';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
@@ -25,6 +26,8 @@ function Users1() {
    let [selectedFile,setSelectedFile]=useState(null)
    const handleClose = () => setShow(false);
    const handleShow = () => setShow(true);
+   const audioElement = new Audio(success);
+   audioElement.style.display = 'none'; // Hide the audio element
   let [UserToEdit,setUserToEdit]=useState({});
   let [user1,setuser1]=useState([])
   let [error,setError]=useState("")
@@ -87,6 +90,7 @@ let EditUser=(Name1Tobeedited)=>{
       if(res.status===201)
       {
         console.log("done1");
+        audioElement.play(); 
         Swal.fire({
           icon: 'success',
           title: 'User Saved Successfully!',
@@ -101,6 +105,7 @@ let deleteUser =(Name1) =>{
    
     if(window.confirm(`Are you sure you want to delete? ${Name1}`)){
       axios.delete(`http://localhost:4000/ConsumerHome-api/remove/${Name1}`).then((response)=>{
+        audioElement.play(); 
     Swal.fire({
       icon: 'success',
       title: Name1,
@@ -138,7 +143,7 @@ let deleteUser =(Name1) =>{
              </div>
             <div className='card-content'>
             <div className='icons1'><button><EditIcon  className='icon1' onClick={()=>{EditUser(userobj)}}/></button><button><DeleteIcon className='icon1' onClick={()=>{deleteUser(userobj.clubname)}}/></button></div>
-                 <h5 className='mb-2'><span><Groups2Icon/></span>   Club name: <h6> {userobj.clubname}</h6></h5>
+                 <h5 className='mb-2'><span><Groups2Icon/></span>   Club Coordinator name: <h6> {userobj.clubname}</h6></h5>
                  <h5 className='mb-2'><span><ContactPageIcon/></span>  User name: <h6> {userobj.username}</h6></h5>
                 <h5 className='mb-2'><span> <PhoneInTalkIcon/></span>   PhoneNumber: <h6> {userobj.phonenumber}</h6></h5>
                  <h5 className='mb-2'><span><AttachEmailIcon/></span>   Email Id: <h6> {userobj.email}</h6></h5>

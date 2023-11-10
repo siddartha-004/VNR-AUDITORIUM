@@ -92,10 +92,27 @@
         margin-left: -16px;
        
     }
+     #coordinatorname{
+        height:40px;
+        width:400px;
+    
+    }
+    .item3 select{
+        width:400px;
+        margin-left: -11px;
+       
+    }
+    .item3 label{
+        width:110px;
+    }
+    
     .item2 label{
         width:106px
     }
-    
+    .item3{
+        display: flex;
+        justify-content: space-around
+    }
     .item2{
         display: flex;
     }
@@ -146,32 +163,3 @@
     .content{
         background-color: #292D3E;
     }
-    .custom-swal-container{
-        width:450px;
-        height: 300px;
-        z-index: 9999;
-    }
-    .swal-alert {
-        z-index: 9999; /* Set a high z-index value to display it on top */
-        width:600px;
-        height:650px;
-        margin: auto;
-      }
-      
-    .custom-swal-container table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-      }
-      
-      .custom-swal-container table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
-      .custom-swal-backdrop {
-        background: transparent; /* Change the background to transparent */
-        backdrop-filter: none; /* Remove blur effect */
-        opacity: 0.5; /* Adjust opacity as needed */
-      }
-      
