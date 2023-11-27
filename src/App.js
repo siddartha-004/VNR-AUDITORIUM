@@ -28,7 +28,7 @@ function App() {
         <BrowserRouter>
         <Routes>
          <Route path='/'>
-            <Route index element={<MainHome/>}/>
+            <Route index element={<Login/>}/>
             <Route path="*" element={<div>Page not found</div>}></Route>
            <Route path="login">
             <Route index element={<Login/>}/>
