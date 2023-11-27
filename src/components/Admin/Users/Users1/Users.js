@@ -67,11 +67,11 @@ function Users1() {
   }, []);
 
 let EditUser=(Name1Tobeedited)=>{
-    if(window.confirm(`Are you sure you want to edit? ${Name1Tobeedited.clubname}`)){
+    if(window.confirm(`Are you sure you want to edit? ${Name1Tobeedited.coordinatorname}`)){
     handleShow();
     setUserToEdit(Name1Tobeedited);
    
-   setValue("clubname",Name1Tobeedited.clubname);
+   setValue("coordinatorname",Name1Tobeedited.coordinatorname);
    setValue("username",Name1Tobeedited.username);
 
    setValue("phonenumber",Name1Tobeedited.phonenumber);
@@ -142,8 +142,8 @@ let deleteUser =(Name1) =>{
                  
              </div>
             <div className='card-content'>
-            <div className='icons1'><button><EditIcon  className='icon1' onClick={()=>{EditUser(userobj)}}/></button><button><DeleteIcon className='icon1' onClick={()=>{deleteUser(userobj.clubname)}}/></button></div>
-                 <h5 className='mb-2'><span><Groups2Icon/></span>   Club Coordinator name: <h6> {userobj.clubname}</h6></h5>
+            <div className='icons1'><button><EditIcon  className='icon1' onClick={()=>{EditUser(userobj)}}/></button><button><DeleteIcon className='icon1' onClick={()=>{deleteUser(userobj.coordinatorname)}}/></button></div>
+                 <h5 className='mb-2'><span><Groups2Icon/></span>   Club Coordinator name: <h6> {userobj.coordinatorname}</h6></h5>
                  <h5 className='mb-2'><span><ContactPageIcon/></span>  User name: <h6> {userobj.username}</h6></h5>
                 <h5 className='mb-2'><span> <PhoneInTalkIcon/></span>   PhoneNumber: <h6> {userobj.phonenumber}</h6></h5>
                  <h5 className='mb-2'><span><AttachEmailIcon/></span>   Email Id: <h6> {userobj.email}</h6></h5>
@@ -167,7 +167,7 @@ let deleteUser =(Name1) =>{
         <form >
           <div className='main2'>
        
-        <input type="text" id="clubname" width="200px"placeholder=" Clubname" className='form-control' {...register("clubname",{required:true})}/>
+        <input type="text" id="username" width="200px"placeholder=" Coordinatorname" className='form-control' {...register("coordinatorname",{required:true})}/>
         <input type="text" id="username"placeholder=" Username" className='form-control' {...register("username",{required:true})}/>
         <input type="text" id="password"placeholder="Password" className='form-control' {...register("password",{required:true})}/>
         <input type="number" id="phonenumber"placeholder="Phonenumber" className='form-control' {...register("phonenumber",{required:true})}/>

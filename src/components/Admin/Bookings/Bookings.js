@@ -18,7 +18,7 @@ function Bookings() {
      .then((response)=>{
         if(response.data.message==="available")
         {
-        
+           
           setvacant(response.data.payload)
           console.log(response.data.payload)
         
@@ -81,6 +81,7 @@ function Bookings() {
             <th>Name</th>
             <th>Timings</th>
             <th>Capacity</th>
+            <th>Slots available</th>
           </tr>
         </thead>
         <tbody>
@@ -90,6 +91,22 @@ function Bookings() {
               <td>{item.availableaudi}</td>
               <td>{item.time}</td>
               <td>{item.capacity}</td>
+              
+      <td>
+        {item.slots && item.slots.length > 0 ? (
+          <div className="checkbox-container">
+           
+            {item.slots.map((slot, idx) => (
+  <label key={slot} className={`checkbox-label ${slot === 0 ? 'red-checkbox' : 'green-checkbox'}`}>
+    <input type="checkbox" checked={false} disabled={true} className="custom-checkbox" />
+    {/* {slot} */}
+  </label>
+))}
+          </div>
+        ) : (
+          'No slots available'
+        )}
+      </td>
             </tr>
           ))}
         </tbody>

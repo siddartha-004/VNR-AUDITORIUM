@@ -9,6 +9,62 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     background-color: #fff;
   }
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .slots-label {
+    margin-right: 8px;
+  }
+  
+  .checkbox-label {
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-checkbox {
+    width: 15px;
+    height: 15px;
+    margin-right: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    /* border: 2px solid #4CAF50; */
+    border-radius: 3px;
+    /* background-color: #4CAF50; */
+  }
+  
+  /* .custom-checkbox:checked {
+    background-color: #4CAF50; /* Green color for checked checkbox */
+  
+  /* Add these styles to your CSS */
+  
+  .checkbox-label.red-checkbox .custom-checkbox {
+    
+    border-color: 2px solid red; /* Change border color to red when the slot value is 0 */
+    background-color: red;
+  }
+
+  
+  .checkbox-label.red-checkbox .custom-checkbox:checked {
+    background-color: red; /* Change background color to red when the checkbox is checked and the slot value is 0 */
+  }
+  .checkbox-label.green-checkbox .custom-checkbox {
+    
+    border-color: 2px solid #4CAF50;
+    background-color: #4CAF50;
+  }
+
+  
+  .checkbox-label.green-checkbox .custom-checkbox:checked {
+    background-color:  #4CAF50; /* Change background color to red when the checkbox is checked and the slot value is 0 */
+  }
+
+  
+  
+  
+  
   .contain4{
     border:solid 2px rgb(205, 199, 199);
     border-radius: 20px;

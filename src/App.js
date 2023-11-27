@@ -8,6 +8,7 @@ import PrioirityBook from './components/Admin/PriorityBook/PriorityBook'
 import AudiSchema from './components/User/AudiSchema/AudiSchema'
 import AllAudis1 from './components/User/AllAudis1/AllAudis1'
 import AllEvents1 from './components/User/AllEvents1/AllEvents1'
+import MyEvents from './components/User/MyEvents/MyEvents'
 import MyBookings from './components/User/MyBookings/MyBookings'
 import List from './components/Admin/List/List'
 import BookAudi from './components/User/BookAudi/BookAudi'
@@ -40,7 +41,7 @@ function App() {
                <Route path="BookAudi" element={<BookAudi/>}/>
                <Route path="AllEvents" element={<AllEvents1/>}/>
                <Route path="vacantBookings" element={<MyBookings/>}/>
-          
+               <Route path="myEvents" element={<MyEvents/>}/>
 
             </Route>
             

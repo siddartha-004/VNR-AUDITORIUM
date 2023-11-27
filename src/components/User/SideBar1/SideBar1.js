@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
+import BookIcon from '@mui/icons-material/Book';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -201,6 +202,26 @@ export default function SideBar1() {
                   <ChaletIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Auditoriums" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem> 
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/UserHome/myEvents")}}>
+              <ListItemButton
+                sx={{
+                  minHeight: 70,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <BookIcon/>
+                </ListItemIcon>
+                <ListItemText primary="My Events" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem> 
             

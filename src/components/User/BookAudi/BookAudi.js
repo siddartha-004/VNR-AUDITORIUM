@@ -2,7 +2,11 @@ import React,{useEffect,useState} from 'react'
 import NavBar1 from '../NavBar1/NavBar1';
 import { PlusOutlined } from '@ant-design/icons';
 import './BookAudi.css';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import success from '../../../images/success.mp3'
+import wrong from '../../../images/wrong.mp3'
+import notavailable from '../../../images/notavailable.mp3'
 import {useNavigate} from 'react-router-dom'
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import axios from 'axios'
@@ -27,7 +31,10 @@ function BookAudi() {
   const handleShow = () => setShow(true);
   const audioElement = new Audio(success);
   audioElement.style.display = 'none'; // Hide the audio element
-
+  const audioElement1 = new Audio(wrong);
+  audioElement1.style.display = 'none';
+  const audioElement2 = new Audio(notavailable);
+  audioElement2.style.display = 'none';
   let {
     register,
     handleSubmit,reset,
@@ -41,8 +48,7 @@ function BookAudi() {
   const [loading, setLoading] = useState(false);
   const [audiname,setaudiname]=useState("")
   useEffect(()=>{
-    console.log(newData,"asdfasfas")
-    console.log(audiname,"gyhyh")
+  
     loadPdfFromFile(newData)
     if(audiname!=="")
     {
@@ -161,8 +167,23 @@ function BookAudi() {
       
     }
   };
+  const [sliderValue, setSliderValue] = useState(1);
 
+  const handleSliderChange = (value) => {
+    setSliderValue(value);
+  };
+  const railStyle = {
+    backgroundColor: 'lightgray',
+  };
 
+  const trackStyle = {
+    backgroundColor: 'darkgreen',
+  };
+
+  const handleStyle = {
+    backgroundColor: 'blue',
+    border: '2px solid blue',
+  };
   const onFileSelect=(e)=>{
     setSelectedFile(e.target.files[0])
    }
@@ -175,11 +196,14 @@ function BookAudi() {
      fd.append("search",JSON.stringify(newSearch))
    
     fd.append("photo",selectedFile)
+    fd.append("sliderValue",sliderValue)
     
     axios
     .post("http://localhost:4000/ConsumerHome-api/book-audi", fd)
     .then((response) => {
-      if (response.status === 201) {
+      if (response.status === 201) 
+      {
+        console.log(response.data)
         if(response.data.pay===1)
         {
           setnewDate(newSearch)
@@ -192,18 +216,49 @@ function BookAudi() {
             text:response.data.message
             // text: 'New '+newUser.typeofuser+' has been registered successfully.',
           });
-          reset();
+          // reset();
         
           handleShow();
           
         
           
-        }else if(response.data.pay===2){
-         const dataArray = response.data.message // Replace with your actual data
+        }
+        else 
+        {
+          console.log(response.data)
+          audioElement1.play(); 
+        Swal.fire({
+          title: "There are no availability according to given requirements",
+          text: "Do you want to enter into waiting list?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, proceed!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // User clicked "Yes, proceed!"
+            
+            
+            setLoading(true);
+            axios.post("http://localhost:4000/ConsumerHome-api/waiting-list",fd)
+            .then((response) => {
+              let v=response.data.message;
+              setLoading(false);
+              audioElement2.play(); 
+              Swal.fire("Action performed!", `You are added to waiting list. Your token number is ${v}`, "success");
+            })
+
+            // Perform your action here
+          } else if(response.data.pay===2){
+            // User clicked "Cancel" or closed the prompt
+            
+            const dataArray = response.data.message // Replace with your actual data
          
           
           
-          if (dataArray.length > 0) {
+          if (dataArray.length > 0)
+           {
             let rowData = '';
           
             // Create rows with data
@@ -231,19 +286,23 @@ function BookAudi() {
                 backdrop: 'custom-swal-backdrop',
               },
             });
-          
-        
-        
-          
-        }else{
-          Swal.fire({
-            icon: 'warning',
-            title: 'Cannot Book due to Unavailability',
-            text:response.data.message,
-          });
+        }
+          }
+          else{
+            audioElement1.play()
+            Swal.fire({
+              icon: 'info',
+              title:'Booking failed',
+              text:response.data.message
+              // text: 'New '+newUser.typeofuser+' has been registered successfully.',
+            });
+          }
+        });
         
         }
-        }
+        
+        
+      }
         if(response.status!=201){
           console.log(response.data.message)
           
@@ -252,7 +311,6 @@ function BookAudi() {
             title: 'Cannnot Book.Try Again!',
             text:response.data.message,
           });
-        }
         }
       })
       .catch((err) => {
@@ -296,7 +354,8 @@ function BookAudi() {
              <label htmlFor="name">* Coordinator name:</label>
              <input
                type="text"
-               id="coordinatorname"
+               id="clubname"
+               
                className="form-control"
               
                {...register("coordinatorname", { required: true })}
@@ -376,6 +435,70 @@ function BookAudi() {
              <label htmlFor="name">* Date of event:</label>
            <input type="date" id="date"placeholder="Booking date" className='form-control' {...register("date",{required:true})}/>
             </div>
+            {/* <div className="item2 mb-4">
+              <label htmlFor="name">* Number of hours required:</label>
+              
+              <select
+                type="text"
+                id="hours"
+                className="form-select"
+          
+                {...register("hours", { required: true })}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="6">6</option>
+                </select>
+              
+            </div> */}
+             {/* <label>
+        <input type="radio" name="checkboxes" value="1" {...register("time")} />
+        1 hr
+      </label>
+      <br />
+      <label>
+        <input type="radio" name="checkboxes" value="2" {...register("time")}/>
+        2 hr
+      </label>
+      <br />
+      <label>
+        <input type="radio" name="checkboxes" value="3"  {...register("time")}/>
+        3 hr
+      </label>
+      <br />
+      <label>
+        <input type="radio" name="checkboxes" value="6"  {...register("time")}/>
+        6 hr
+      </label>
+      <br /> */}
+      <div className=" itemr mb-4">
+             <label htmlFor="name1">* Number of hours required:</label>
+             <div  className="slider">
+      
+     
+    
+             <Slider
+        min={1}
+        max={6}
+        step={5}
+        value={sliderValue}
+        onChange={handleSliderChange}
+        marks={{
+          1: '1',
+          2: '2',
+          3: '3',
+          6: '6',
+        }}
+        railStyle={railStyle}
+        trackStyle={trackStyle}
+        handleStyle={handleStyle}
+      />
+             </div>
+             <div className='val'>
+             <h5>  ( {sliderValue} )</h5>
+             </div>
+             </div>
+      
             
             
             

@@ -52,11 +52,20 @@
   /* EventCard.css */
 
 .event-card {
-    width: 300px;
+    width: 330px;
     margin: 20px;
     transition: transform 0.2s;
   }
-  
+  .event-card2{
+    width:330px;
+    margin-left:3px;
+    margin-top: 5px;
+    transition: transform 0.2s;
+  }
+  .event-card2:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
   .event-card:hover {
     transform: translateY(-5px);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -67,6 +76,31 @@
 .fer1{
   display:flex;
 }  
+.wet{
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next line */
+  
+
+  justify-content: flex-start; /* Evenly space items */
+}
+.wet1{
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next line */
+  
+
+  justify-content: flex-start; /* Evenly space items */
+}
+
+
+/* Add additional margin to the last item in each row */
+.wet > div:nth-child(3n) {
+  margin-right: 0; /* Remove the right margin for the last item in each row */
+}
+
+
+
+
+
 
 .down button{
     color: blueviolet;
@@ -85,3 +119,12 @@
         justify-content: flex-end;
         margin-top: 5px;
     }
+    .contain8{
+      border:solid 2px rgb(205, 199, 199);
+      border-radius: 20px;
+      height:500vh;
+  
+      box-shadow:2px 2px 2px rgb(234, 221, 221) ;
+      padding: 15px;
+      margin-top: 20px;
+  }

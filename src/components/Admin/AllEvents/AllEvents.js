@@ -21,7 +21,24 @@ function AllEvents() {
         {
         
           console.log("got ah");
-          setevent(response.data.payload)
+         
+          const myArray = response.data.payload;
+          const myArray2=[];
+          const myArray3=[];
+          for(const item in myArray)
+          {
+            console.log(myArray[item])
+            if (myArray3.includes(myArray[item].eventname)) {
+              console.log('Element is present');
+              continue;
+            } else {
+              console.log('Element is not present');
+              myArray3.push(myArray[item].eventname);
+              myArray2.push(myArray[item]);
+            }
+          }
+          console.log(myArray2)
+          setevent(myArray2)
           console.log(response.data.payload)
         
         }
@@ -63,7 +80,7 @@ function AllEvents() {
     <Box sx={{ display: 'flex' }}>
     <SideBar/>
    <Box component="main" sx={{ flexGrow: 1, p: 4 }}>
-    <div className='contain1'>
+    <div className='contain8'>
     {event.length == 0 && (
       <p className="goby display-5 text-danger text-center">*No Events Registered *
       </p>
@@ -74,105 +91,183 @@ function AllEvents() {
 
      
     
-      <div className='row row-cols-3'>
+<div className='wet'>
        
     
    {event.map(event => (
-    <div>
-      
+    <div key={event.eventname}>
+      {event.option==="Morning"?
+      <div className='row row-cols-3'>
         <Card className="event-card">
       <CardMedia
         component="img"
         height="200"
-        image={event.bookeddetails.who_bookedM.image}
-        alt={event.bookeddetails.who_bookedM.eventname}
+        image={event.image}
+        alt={event.eventname}
       />
       <CardContent>
-        <Typography variant="h6" component="div" color="text.primary">
-          {event.bookeddetails.who_bookedM.eventname}
+        <Typography variant="h6" component="div" color="text.primary" style={{ fontWeight: 'bold', fontSize: 'larger' }}>
+          {event.eventname}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Date: {event.bookeddetails.who_bookedM.date}
+          <b>Date:</b> {event.date}
+        </Typography>
+        {event.eventtime&&
+        <Typography variant="body2" color="text.secondary" >
+          <b>Timings: </b>{event.eventtime}
+        </Typography>
+}
+        <Typography variant="body2" color="text.secondary">
+          <b>Duration: </b>{event.time} hrs
+        
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Time: Morning
+          <b>Booked By:</b>{event.coordinatorname}
         </Typography>
+        {event.clubname&&
         <Typography variant="body2" color="text.secondary">
-          Booked By: {event.bookeddetails.who_bookedM.coordinatorname}
-        </Typography>
-        {event.bookeddetails.who_bookedM.clubname&&
-        <Typography variant="body2" color="text.secondary">
-          Club name: {event.bookeddetails.who_bookedM.clubname}
+          <b>Club name: </b>{event.clubname}
         </Typography>}
         <Typography variant="body2" color="text.secondary">
-          Phone no: {event.bookeddetails.who_bookedM.phonenumber}
+          <b>Phone no: </b>{event.phonenumber}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Location:{event.bookedaudi}
+          <b>Location:</b>{event.bookedaudi}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {event.bookeddetails.who_bookedM.description}
+          {event.description}
         </Typography>
         
         
           
       </CardContent>
-    </Card>
+    </Card></div>:null}
     </div>
   
       ))}
+       
       </div>)}
       <hr/>
       <h4>Events Registered in Afternoon</h4>
       {loading ? <Spinner /> : (
-      <div className='row row-cols-3'>
-   {event.map(event => (
-    <div>
-      {event.bookeddetails.who_bookedA&&
-        <Card className="event-card">
-      <CardMedia
-        component="img"
-        height="200"
-        image={event.bookeddetails.who_bookedA.image}
-        alt={event.bookeddetails.who_bookedA.eventname}
-      />
-      <CardContent>
-        <Typography variant="h6" component="div" color="text.primary">
-          Event Name: {event.bookeddetails.who_bookedA.eventname}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Date: {event.bookeddetails.who_bookedA.date}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Time:Afternoon
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Booked By: {event.bookeddetails.who_bookedA.coordinatorname}
-        </Typography>
-        {event.bookeddetails.who_bookedA.clubname&&
-        <Typography variant="body2" color="text.secondary">
-          Club name: {event.bookeddetails.who_bookedA.clubname}
-        </Typography>}
-        <Typography variant="body2" color="text.secondary">
-          Phone no: {event.bookeddetails.who_bookedA.phonenumber}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Location:{event.bookedaudi}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {event.bookeddetails.who_bookedA.description}
-        </Typography>
-        
-        
-          
-      </CardContent>
-    </Card>
-}
-    </div>
+
+     
+    
+<div className='wet'>
+       
+    
+       {event.map(event => (
+        <div key={event.eventname}>
+          {event.option==="Afternoon"?
+          <div className='row row-cols-3'>
+            <Card className="event-card">
+          <CardMedia
+            component="img"
+            height="200"
+            image={event.image}
+            alt={event.eventname}
+          />
+          <CardContent>
+            <Typography variant="h6" component="div" color="text.primary" style={{ fontWeight: 'bold', fontSize: 'larger' }}>
+              {event.eventname}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <b>Date: </b>{event.date}
+            </Typography>
+           {event.eventtime&& <Typography variant="body2" color="text.secondary">
+              <b>Timings: </b>{event.eventtime}
+            </Typography>}
+
+            <Typography variant="body2" color="text.secondary">
+              <b>Duration: </b>{event.time} hrs
+            
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <b>Booked By: </b>{event.coordinatorname}
+            </Typography>
+            {event.clubname&&
+            <Typography variant="body2" color="text.secondary">
+              <b>Club name: </b>{event.clubname}
+            </Typography>}
+            <Typography variant="body2" color="text.secondary">
+              <b>Phone no: </b>{event.phonenumber}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <b>Location:</b>{event.bookedaudi}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {event.description}
+            </Typography>
+            
+            
+              
+          </CardContent>
+        </Card></div>:null}
+        </div>
       
+          ))}
+          </div>)}
+<hr/>
+      <h4>Events Registered For Full Day</h4>
+      {loading ? <Spinner /> : (
+
+     
+    
+<div className='wet'>
+ 
+
+{event.map(event => (
+<div key={event.eventname}>
+{event.option==="Full"?
+<div className='row row-cols-3'>
+  <Card className="event-card">
+<CardMedia
+  component="img"
+  height="200"
+  image={event.image}
+  alt={event.eventname}
+/>
+<CardContent>
+  <Typography variant="h6" component="div" color="text.primary" style={{ fontWeight: 'bold', fontSize: 'larger' }}>
+    {event.eventname}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    <b>Date:</b> {event.date}
+  </Typography>
+  {event.eventtime&&
+  <Typography variant="body2" color="text.secondary">
+    <b>Timings: </b>{event.eventtime}
+  </Typography>
+}
+  <Typography variant="body2" color="text.secondary">
+    <b>Duration: </b>{event.time} hrs
   
-      ))}
-      </div>)}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    <b>Booked By: </b>{event.coordinatorname}
+  </Typography>
+  {event.clubname&&
+  <Typography variant="body2" color="text.secondary">
+    <b>Club name: </b>{event.clubname}
+  </Typography>}
+  <Typography variant="body2" color="text.secondary">
+    <b>Phone no: </b>{event.phonenumber}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    <b>Location:</b>{event.bookedaudi}
+  </Typography>
+  <Typography variant="body2" color="text.secondary">
+    {event.description}
+  </Typography>
+  
+  
+    
+</CardContent>
+</Card></div>:null}
+</div>
+
+))}
+</div>)}
 
    </div>
  </Box>

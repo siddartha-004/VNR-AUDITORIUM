@@ -9,7 +9,7 @@ import NavBar1 from '../NavBar1/NavBar1';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Groups3Icon from '@mui/icons-material/Groups3';
-
+import {useNavigate} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 import './AllAudis1.css'
 function AllAudis1() {
@@ -21,10 +21,10 @@ function AllAudis1() {
   let [Audi1,setAudi1]=useState([])
   let [error,setError]=useState("")
 
-
+  const navigate = useNavigate();
   let getAudis1=()=>{
     let token=localStorage.getItem("token")
-     axios.get("http://localhost:4000/AdminHome-api/get-audi",{headers:{"Authorization":"Bearer "+token}})
+     axios.get("http://localhost:4000/AdminHome-api/get-Audi",{headers:{"Authorization":"Bearer "+token}})
      .then((response)=>{
        console.log(response.data)
         if(response.data.message==="Unauthorized request")
@@ -34,6 +34,14 @@ function AllAudis1() {
             title: response.data.message,
             text: "Relogin again",
           });
+        }else if(response.data.message==="jwt expired")
+        {
+          Swal.fire({
+            icon: 'error',
+            title: response.data.message,
+            text: "Relogin again",
+          });
+          navigate("/login");
         }
         else{
           setAudi1(response.data.payload)
@@ -62,14 +70,15 @@ function AllAudis1() {
     });
   }
   useEffect(()=>{
-    const delay = 3000;
+    // const delay = 3000;
 
 
-    setLoading(true);
-    setTimeout(() => {
+    // setLoading(true);
+    // setTimeout(() => {
      
-      getAudis1();
-    },delay)
+    //   getAudis1();
+    // },delay)
+    getAudis1();
   }, []);
 
 

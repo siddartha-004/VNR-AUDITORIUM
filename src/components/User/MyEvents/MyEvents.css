@@ -1,0 +1,19 @@
+.icons6 button{
+    color: rgb(51, 7, 92);
+    margin-right: 3px;
+    border-radius: 10%;
+    
+    border: none;
+    }
+    .icons6 button:hover{
+        background-color: azure;
+        font-size: larger;
+        font-weight: bold;
+        color: crimson;
+    
+    }
+    .icons6{
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 5px;
+    }

@@ -49,7 +49,7 @@ function NewUser() {
           console.log("added")
           Swal.fire({
             icon: 'success',
-            title: newUser.clubname+' '+newUser.typeofuser+' registered',
+            title: newUser.coordinatorname+' '+newUser.typeofuser+' registered',
             text: 'New '+newUser.typeofuser+' has been registered successfully.',
           });
           reset();
@@ -106,10 +106,10 @@ function NewUser() {
               <label htmlFor="Fullname">Fullname:</label>
               <input
                 type="text"
-                id="clubname"
+                id="coordinatorname"
                 className="form-control"
                 
-                {...register("clubname", { required: true })}
+                {...register("coordinatorname", { required: true })}
               />
             
             </div>

@@ -34,11 +34,11 @@ function Admin() {
  let [AdminToEdit,setAdminToEdit]=useState({});
 
   let EditAdmin=(Name1Tobeedited)=>{
-    if(window.confirm(`Are you sure you want to edit? ${Name1Tobeedited.clubname}`)){
+    if(window.confirm(`Are you sure you want to edit? ${Name1Tobeedited.coordinatorname}`)){
     handleShow();
     setAdminToEdit(Name1Tobeedited);
    
-   setValue("clubname",Name1Tobeedited.clubname);
+   setValue("coordinatorname",Name1Tobeedited.coordinatorname);
    setValue("username",Name1Tobeedited.username);
 
    setValue("phonenumber",Name1Tobeedited.phonenumber);
@@ -60,8 +60,8 @@ function Admin() {
         audioElement.play(); 
         Swal.fire({
           icon: 'success',
-          title: 'User Saved Successfully!',
-          text: ' User has been changed successfully.',
+          title: 'Admin Saved Successfully!',
+          text: ' Admin has been changed successfully.',
         });
         handleClose();
   
@@ -119,7 +119,7 @@ function Admin() {
              </div>
             <div className='card-content'>
             <div className='icons1'><button><EditIcon  className='icon1' onClick={()=>{EditAdmin(userobj)}}/></button></div>
-                 <h5 className='mb-2'><span><Groups2Icon/></span>   Admin name: <h6> {userobj.clubname}</h6></h5>
+                 <h5 className='mb-2'><span><Groups2Icon/></span>   Admin name: <h6> {userobj.coordinatorname}</h6></h5>
                  <h5 className='mb-2'><span><ContactPageIcon/></span>  User name: <h6> {userobj.username}</h6></h5>
                 <h5 className='mb-2'><span> <PhoneInTalkIcon/></span>   PhoneNumber: <h6> {userobj.phonenumber}</h6></h5>
                  <h5 className='mb-2'><span><AttachEmailIcon/></span>   Email Id: <h6> {userobj.email}</h6></h5>
@@ -143,7 +143,7 @@ function Admin() {
         <form >
           <div className='main2'>
        
-        <input type="text" id="clubname" width="200px"placeholder=" Clubname" className='form-control' {...register("clubname",{required:true})}/>
+        <input type="text" id="username" width="200px"placeholder=" Clubname" className='form-control' {...register("coordinatorname",{required:true})}/>
         <input type="text" id="username"placeholder=" Username" className='form-control' {...register("username",{required:true})}/>
         <input type="text" id="password"placeholder="Password" className='form-control' {...register("password",{required:true})}/>
         <input type="number" id="phonenumber"placeholder="Phonenumber" className='form-control' {...register("phonenumber",{required:true})}/>

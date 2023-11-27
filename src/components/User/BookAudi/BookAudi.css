@@ -67,6 +67,9 @@
     .item2.name{
         margin-left: 2px;
     }
+    .itemr.name1{
+        margin-left: 2px;
+    }
     .create1 .sign-event{
         background-color:#292D3E;
         width:590px;
@@ -92,8 +95,21 @@
         margin-left: -16px;
        
     }
+    .itemr .slider{
+        width:300px;
+        margin-left: 18px;
+        margin-top: 6px;
+       
+    }
+    .val h5{
+        margin-left: 7px;
+    }
     .item2 label{
         width:106px
+    }
+    .itemr label{
+        width:116px;
+        margin-left: -72px;
     }
     
     .item2{
@@ -119,6 +135,10 @@
         color: darkcyan;
     }
     .item2{
+        display: flex;
+        justify-content: space-around
+    }
+    .itemr{
         display: flex;
         justify-content: space-around
     }
@@ -157,7 +177,7 @@
         height:650px;
         margin: auto;
       }
-      
+     
     .custom-swal-container table {
         width: 100%;
         border-collapse: collapse;

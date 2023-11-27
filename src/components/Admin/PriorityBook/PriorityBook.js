@@ -35,6 +35,7 @@ function PrioirityBook() {
   let [error, setError] = useState("");
   let [selectedFile,setSelectedFile]=useState(null)
   const [loading, setLoading] = useState(false);
+  const [Audi1, setAudi1] = useState([]);
   const [pdfBytes, setPdfBytes] = useState(null);
   const [newData,setnewDate] = useState(null)
   const [audiname,setaudiname]=useState("")
@@ -49,6 +50,56 @@ function PrioirityBook() {
   },[newData,audiname])
   // useEffect(() => {
     // Load the PDF file directly from the import
+    let getAudis1=()=>{
+      let token=localStorage.getItem("token")
+       axios.get("http://localhost:4000/AdminHome-api/get-Audi",{headers:{"Authorization":"Bearer "+token}})
+       .then((response)=>{
+        
+          if(response.data.message==="Unauthorized request")
+          {
+            Swal.fire({
+              icon: 'error',
+              title: response.data.message,
+              text: "Relogin again",
+            });
+          }
+          else{
+            setAudi1(response.data.payload)
+        
+            console.log("done");
+          }
+            
+        
+       })
+       .catch((err)=>{
+        if(err.response){
+            setError(err.message);
+          }
+          else if(err.request)
+          {
+            setError(err.message)
+          }
+          else{
+            setError(err.message)
+          }
+       }
+     
+       )
+       .finally(() => {
+        setLoading(false); // Hide the spinner after the request is complete
+      });
+    }
+    useEffect(()=>{
+      // const delay = 3000;
+  
+  
+      // setLoading(true);
+      // setTimeout(() => {
+       
+      //   getAudis1();
+      // },delay)
+      getAudis1();
+    }, []);
     const email=()=>{
       axios.post('http://localhost:4000/ConsumerHome-api/send-email', {
       recipient: newData.email,
@@ -252,7 +303,7 @@ function PrioirityBook() {
              <label htmlFor="name">* Coordinator name:</label>
              <input
                type="text"
-               id="coordinatorname"
+               id="clubname"
                className="form-control"
                
                {...register("coordinatorname", { required: true })}
@@ -278,6 +329,7 @@ function PrioirityBook() {
              />
            
            </div>
+
            {/* email */}
            <div className="item2 mb-4">
              <label htmlFor="name">* PhoneNo:</label>
@@ -292,17 +344,57 @@ function PrioirityBook() {
              
            </div>
            <div className="item3 mb-4">
-              <label htmlFor="name">* Timing:</label>
+           <label htmlFor="name">* Auditorium:</label>
+           
+      <select id="carDropdown" value={Audi1} {...register("Audiname")}>
+        
+        {Audi1.map((car, index) => (
+          <option key={index} value={car.Name2}>{car.Name2}</option>
+        ))}
+      </select>
+        </div>
+           <div className="item3 mb-4">
+           <label htmlFor="name">Morning:</label>
+           <label>
+        <input type="checkbox" name="checkboxes" value="M1" {...register("time")} />
+        Slot 1
+      </label>
+      <br />
+      <label>
+        <input type="checkbox" name="checkboxes" value="M2" {...register("time")}/>
+        Slot 2
+      </label>
+      <br />
+      <label>
+        <input type="checkbox" name="checkboxes" value="M3"  {...register("time")}/>
+        Slot 3
+      </label>
+      <br />
+      
               
-              <select
-                type="text"
-                id="timing"
-                className="form-select"
-                placeholder="e.g. John"
-                {...register("timing", { required: true })}>
-                <option value="FN">FN</option>
-                <option value="AN">AN</option>
-                </select>
+              
+              
+            </div>
+            <div className="item3 mb-4">
+           <label htmlFor="name">Afternoon:</label>
+           <label>
+        <input type="checkbox" name="checkboxes" value="A1" {...register("time")} />
+        Slot 1
+      </label>
+      <br />
+      <label>
+        <input type="checkbox" name="checkboxes" value="A2" {...register("time")}/>
+        Slot 2
+      </label>
+      <br />
+      <label>
+        <input type="checkbox" name="checkboxes" value="A3"  {...register("time")}/>
+        Slot 3
+      </label>
+      <br />
+      
+              
+              
               
             </div>
            
@@ -336,11 +428,12 @@ function PrioirityBook() {
              <label htmlFor="name">* Description:</label>
              <textarea id="description" placeholder="......" className='form-control' {...register("description",{required:true})}/>
              </div>
-             
-           <div className="item2 mb-4">
+             <div className="item2 mb-4">
              <label htmlFor="name">* Capacity:</label>
            <input type="number" id="Capacity"placeholder="Auditorium Capacity" className='form-control' {...register("Capacity",{required:true})}/>
             </div>
+             
+          
 
             <div className="item2 mb-4">
              <label htmlFor="name">* Date of event:</label>
