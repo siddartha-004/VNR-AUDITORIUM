@@ -188,6 +188,7 @@ function BookAudi() {
     setSelectedFile(e.target.files[0])
    }
    let addNewSearch = (newSearch) => {
+    let token=localStorage.getItem("token")
     setLoading(true);
   
      let fd=new FormData();
@@ -222,6 +223,17 @@ function BookAudi() {
           
         
           
+        }
+        else if(response.data.pay===5)
+        {
+          audioElement1.play(); 
+          console.log("added")
+          Swal.fire({
+            icon: 'warning',
+            title:'Booking Failed',
+            text:response.data.message
+            // text: 'New '+newUser.typeofuser+' has been registered successfully.',
+          });
         }
         else 
         {

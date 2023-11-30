@@ -10,7 +10,7 @@ app.use(exp.static(path.join(__dirname,'./build')))
 
 const mclient=require("mongodb").MongoClient;
 
-mclient.connect('mongodb://0.0.0.0:27017')
+mclient.connect('mongodb://127.0.0.1:27017/cbpdemo')
 .then(dbRef=>{
   let dbObj=dbRef.db('cbpdemo')
 

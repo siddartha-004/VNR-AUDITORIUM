@@ -77,6 +77,7 @@ let EditUser=(Name1Tobeedited)=>{
    setValue("phonenumber",Name1Tobeedited.phonenumber);
    setValue("email",Name1Tobeedited.email);
    setValue("image",Name1Tobeedited.image);
+   setValue("maxcount",Name1Tobeedited.maxcount)
  
     }
   }
@@ -147,6 +148,7 @@ let deleteUser =(Name1) =>{
                  <h5 className='mb-2'><span><ContactPageIcon/></span>  User name: <h6> {userobj.username}</h6></h5>
                 <h5 className='mb-2'><span> <PhoneInTalkIcon/></span>   PhoneNumber: <h6> {userobj.phonenumber}</h6></h5>
                  <h5 className='mb-2'><span><AttachEmailIcon/></span>   Email Id: <h6> {userobj.email}</h6></h5>
+                 <h5 className='mb-2'><span><AttachEmailIcon/></span>   Max Count: <h6> {userobj.maxcount}</h6></h5>
                  
              </div>
              <div className='icons1'>
@@ -178,6 +180,7 @@ let deleteUser =(Name1) =>{
                 className="form-control"
                 {...register("email", { required: true })}
               />
+               <input type="number" id="maxcount"placeholder="maxcount" className='form-control' {...register("maxcount",{required:true})}/>
      
         </div>
        

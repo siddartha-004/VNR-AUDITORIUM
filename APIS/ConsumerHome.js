@@ -10,6 +10,35 @@ userApp.use(bodyParser.json({ limit: '50mb' }));
 userApp.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 userApp.use(bodyParser.json());
 userApp.use(cors());
+
+
+
+const extractUsernameMiddleware = (req, res, next) => {
+  // Assuming the username is in the Authorization header
+  const authHeader = req.headers.authorization;
+
+  if (authHeader) {
+    // Assuming the header is in the format: Bearer <token>
+    const token = authHeader.split(' ')[1];
+
+    try {
+      // Verify and decode the token
+      const decodedToken = jwt.verify(token, process.env.SECRET_KEY); // Replace 'your-secret-key' with your actual secret key
+
+      // Assuming the username is stored in the decoded token
+      const username = decodedToken.username;
+
+      // Attach the username to the request object for further use
+      req.username = username;
+    } catch (error) {
+      console.error('Error decoding token:', error.message);
+      // Handle token verification errors
+    }
+  }
+
+  // Continue to the next middleware or route handler
+  next();
+};
 //import express-async-handler
 const expressAsyncHandler = require('express-async-handler')
 
@@ -942,9 +971,12 @@ for (let i = 0; i < 3; i++) {
 
 }))
 userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async (request, response) => {
-
+  const userCollectionObj = request.app.get("userCollection")
+  
   const newSearch = JSON.parse(request.body.search);
-  console.log(request.body);
+  let userOfDB = await userCollectionObj.findOne({ coordinatorname: newSearch.coordinatorname })
+  console.log(userOfDB,"stick")
+
   newSearch.image = request.file.path;
   const collection = request.app.get("audiavailability")
   //console.log(collection,"hello");
@@ -986,6 +1018,11 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
     await collection.insertOne({ date: nextDateFormatted, data: newDocuments });
   }
 
+if(parseInt(userOfDB.maxcount,10)<=parseInt(userOfDB.count,10))
+{
+  response.status(201).send({ pay: 5, message:"Maximum limit of bookings exceeded.For further bookings please approach Admin" })
+}else{
+  
 
   // now do the booking logic
   // get the collection
@@ -1024,6 +1061,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
           console.log(result1);
           const result = await collection.updateOne(a, b);
           roomFound = true;
+          const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result2 = await userCollectionObj.updateOne(m, n);
           response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} for slot ${i} is now marked as unavailable in Morning.` });
           break;
         }
@@ -1032,7 +1073,7 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
       if (roomFound === false) {
         for (let i = 1; i <= 3; i++) {
           newSearch.time = time;
-          newSearch.connect = `M${i}`;
+          newSearch.connect = `A${i}`;
           newSearch.eventtime = `${i + 12}:40 pm to ${i + 13}:40 pm (Slot ${i})`
           newSearch.option = "Afternoon"
           const a = ({ $and: [{ date: date }, { [`data.${roomName.Name1}.capacity`]: { $gte: Number(desiredCapacity) } }, { [`data.${roomName.Name1}.availableA${i}`]: true }] });
@@ -1045,6 +1086,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
             console.log(result1);
             const result = await collection.updateOne(a, b);
             roomFound = true;
+            const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result2 = await userCollectionObj.updateOne(m, n);
             response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} for slot ${i} is now marked as unavailable in Afternoon.` });
             break;
           }
@@ -1082,6 +1127,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
         const result3 = await collection.updateOne(d, e);
 
         roomFound = true;
+        const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result4= await userCollectionObj.updateOne(m, n);
         response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} for slot 1,2 is now marked as unavailable in Morning.` });
         break;
       }
@@ -1110,6 +1159,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
           const result3 = await collection.updateOne(d, e);
 
           roomFound = true;
+          const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result5 = await userCollectionObj.updateOne(m, n);
           response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} for slot 2,3 is now marked as unavailable in Morning.` });
           break;
         }
@@ -1140,6 +1193,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
           const result3 = await collection.updateOne(d, e);
 
           roomFound = true;
+          const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result5 = await userCollectionObj.updateOne(m, n);
           response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} for slot 1,2 is now marked as unavailable in Afternoon.` });
           break;
         }
@@ -1169,6 +1226,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
           const result3 = await collection.updateOne(d, e);
 
           roomFound = true;
+          const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result5 = await userCollectionObj.updateOne(m, n);
           response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} for slot 2,3 is now marked as unavailable in Afternoon.` });
           break;
         }
@@ -1208,6 +1269,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
         const result5 = await collection.updateOne(g, h);
 
         roomFound = true;
+        const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result6 = await userCollectionObj.updateOne(m, n);
         response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} is now marked as unavailable in Morning.` });
         break;
 
@@ -1247,6 +1312,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
           const result5 = await collection.updateOne(g, h);
 
           roomFound = true;
+          const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result6 = await userCollectionObj.updateOne(m, n);
           response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} is now marked as unavailable in Afternoon.` });
           break;
         }
@@ -1293,6 +1362,10 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
 
         }
         roomFound = true;
+        const count=parseInt(userOfDB.count,10)+1;
+          const m=({coordinatorname:newSearch.coordinatorname})
+          const n = ({ $set: { count: count } })
+          const result2 = await userCollectionObj.updateOne(m, n);
         response.status(201).send({ pay: 1, message: `${roomName.Name1} Auditorium with capacity ${desiredCapacity} on ${date} is now marked as unavailable for full day.` });
         break;
       }
@@ -1345,6 +1418,7 @@ userApp.post("/book-audi", multerObj.single('photo'), expressAsyncHandler(async 
 
     // Print the available rooms for the next three days
 
+  }
   }
 }))
 
@@ -1456,14 +1530,15 @@ userApp.post("/remove-event", expressAsyncHandler(async (request, response) => {
   
   const userObj1 = request.app.get("userCollection")
   const newSearch = (request.body);
-
+  console.log(newSearch)
   const audiavailability=request.app.get("audiavailability")
   const parts = (newSearch.connect).split('+');
   const audi=newSearch.bookedaudi;
   
   for(const slot of parts)
   {
-    audiavailability.updateMany({date:newSearch.date},{ $set:  { [`data.${audi}.available${slot}`]: true, [`data.${audi}.who_booked${slot}`]: null} } );
+    const result=await audiavailability.updateOne({date:newSearch.date},{ $set:  { [`data.${audi}.available${slot}`]: true, [`data.${audi}.who_booked${slot}`]: null} } );
+    console.log(result,"lp")
   }
   const waiting_list1=await audiavailability.findOne( { date: newSearch.date });
   const waiting_list=waiting_list1.data.waiting;
@@ -1475,6 +1550,7 @@ userApp.post("/remove-event", expressAsyncHandler(async (request, response) => {
   const time=event.time;
   const desiredCapacity=event.Capacity;
   let roomFound=false;
+  let maildetails={};
   if (time === "1") {
     
     for (let i = 1; i <= 3; i++) {
@@ -1511,6 +1587,7 @@ userApp.post("/remove-event", expressAsyncHandler(async (request, response) => {
   let result9=await audiavailability.updateOne(filter,update);
   console.log(result9,"result9");
         roomFound = true;
+       
        break;
       
       }
@@ -1842,8 +1919,36 @@ userApp.post("/remove-event", expressAsyncHandler(async (request, response) => {
            roomFound = true;
     }
   }
+  
+  if(roomFound)
+  {
+    console.log(efg,"efg");
+    console.log(event,"event");
+  const mailOptions = {
+    from: 'vnrvjietaudis@gmail.com',
+    to: efg.email,
+    subject: "Hurrah! You're waiting time is over",
+    html: `
+    <p>Dear ${efg.coordinatorname},</p>
+    <p>Your event was booked on ${efg.date} in ${audi} (${event.eventtime}) from waiting list</p>
+    
+  `,
+  
+  };
+  
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error, "dsafsfdas");
+  
+    } else {
+      console.log('Email sent: ' + info.response);
+  
+    }
+  });
 }
-  response.status(201).send({ message: "Event removed" })
+}
+
+response.status(201).send({ message: "Event removed" })
 }))
 userApp.post("/waiting-list", multerObj.single('photo'),expressAsyncHandler(async (request, response) => {
 console.log("kkkkkk")

@@ -32,6 +32,14 @@ function NewUser() {
     setSelectedFile(e.target.files[0])
    }
    let addNewUser = (newUser) => {
+    if(newUser.typeofuser==="User")
+    {
+
+    
+    newUser.maxcount=10;
+    newUser.count=0;
+    }
+    
     setLoading(true)
     let fd=new FormData();
     
